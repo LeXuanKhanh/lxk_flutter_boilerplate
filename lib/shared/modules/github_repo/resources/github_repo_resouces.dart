@@ -1,5 +1,5 @@
-import '/api_sdk/api_sdk.dart';
-import '/shared/modules/github_repo/models/repo.dart';
+import 'package:lxk_flutter_boilerplate/api_sdk/api_sdk.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/github_repo/models/repo.dart';
 
 class GithubRepoResources {
   static Future<List<Repo>> getData() async {

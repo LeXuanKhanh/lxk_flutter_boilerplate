@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '/src/config/color_constants.dart';
+import 'package:lxk_flutter_boilerplate/src/config/color_constants.dart';
 
 class ThemeConfig {
   static ThemeData get darkTheme => createTheme(

@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 
-import '/api_sdk/rest/api_helpers/api_exception.dart';
+import 'package:lxk_flutter_boilerplate/api_sdk/rest/api_helpers/api_exception.dart';
 
 dynamic _returnResponse(http.Response response) {
   switch (response.statusCode) {

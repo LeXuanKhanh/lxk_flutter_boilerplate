@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '/shared/modules/authentication/bloc/authentication/authentication_bloc.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/authentication/bloc/authentication/authentication_bloc.dart';
 import '../../../shared/modules/authentication/bloc/authentication/authentication_event.dart';
 import '../../../shared/modules/authentication/bloc/authentication/authentication_state.dart';
 

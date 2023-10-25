@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '/shared/modules/github_repo/bloc/github_repo_bloc/github_repo_bloc.dart';
-import '/shared/modules/github_repo/bloc/github_repo_bloc/github_repo_event.dart';
-import '/shared/modules/github_repo/bloc/github_repo_bloc/github_repo_state.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/github_repo/bloc/github_repo_bloc/github_repo_bloc.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/github_repo/bloc/github_repo_bloc/github_repo_event.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/github_repo/bloc/github_repo_bloc/github_repo_state.dart';
 
 
 class GithubRepoListScreen extends StatefulWidget {

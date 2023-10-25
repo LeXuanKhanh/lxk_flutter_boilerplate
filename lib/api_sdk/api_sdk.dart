@@ -1,11 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '/api_sdk/api_constants.dart';
-import '/api_sdk/graphql_method/graphql_handler.dart';
-import '/api_sdk/rest/dio_http_handler.dart';
-import '/shared/modules/authentication/bloc/authentication/authentication_bloc.dart';
-import '/shared/modules/authentication/bloc/authentication/authentication_event.dart';
-import '/src/app.dart';
-import '/src/utils/extension/build_context+extension.dart';
+import 'package:lxk_flutter_boilerplate/api_sdk/api_constants.dart';
+import 'package:lxk_flutter_boilerplate/api_sdk/graphql_method/graphql_handler.dart';
+import 'package:lxk_flutter_boilerplate/api_sdk/rest/dio_http_handler.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/authentication/bloc/authentication/authentication_bloc.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/authentication/bloc/authentication/authentication_event.dart';
+import 'package:lxk_flutter_boilerplate/src/app.dart';
+import 'package:lxk_flutter_boilerplate/src/utils/extension/build_context+extension.dart';
 
 class ApiSdk {
 

@@ -1,9 +1,9 @@
 // routes for the app
 import 'package:flutter/material.dart';
-import '/src/screens/animal/animal_detail_screen.dart';
-import '/src/screens/home/index.dart';
-import '/src/screens/onboarding/authentication_screen.dart';
-import '/src/splash_screen.dart';
+import 'package:lxk_flutter_boilerplate/src/screens/animal/animal_detail_screen.dart';
+import 'package:lxk_flutter_boilerplate/src/screens/home/index.dart';
+import 'package:lxk_flutter_boilerplate/src/screens/onboarding/authentication_screen.dart';
+import 'package:lxk_flutter_boilerplate/src/splash_screen.dart';
 
 Route routes(RouteSettings settings) {
   final route = _routeConfigMap[settings.name] ??
@@ -30,10 +30,10 @@ enum RouteName {
 
   String get path {
     if (this == RouteName.splashScreen) {
-      return '/';
+      return 'package:lxk_flutter_boilerplate/';
     }
 
-    return '$this'.replaceAll('RouteName.', '/');
+    return '$this'.replaceAll('RouteName.', 'package:lxk_flutter_boilerplate/');
   }
 
   RoutePredicate get modalRoute {

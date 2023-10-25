@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import '/shared/modules/authentication/models/current_user_data.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/authentication/models/current_user_data.dart';
 
 abstract class AuthenticationState extends Equatable {
   const AuthenticationState();

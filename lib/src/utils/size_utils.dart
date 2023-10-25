@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '/src/app.dart';
+import 'package:lxk_flutter_boilerplate/src/app.dart';
 
 class SizeConfig {
   SizeConfig._() {

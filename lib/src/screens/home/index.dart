@@ -1,19 +1,19 @@
 // home screen contents
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '/src/routes/index.dart';
-import '/src/screens/animal/animal_list_screen.dart';
+import 'package:lxk_flutter_boilerplate/src/routes/index.dart';
+import 'package:lxk_flutter_boilerplate/src/screens/animal/animal_list_screen.dart';
 import 'package:provider/provider.dart';
 
-import '/shared/modules/authentication/bloc/authentication/authentication_bloc.dart';
-import '/src/config/string_constants.dart'
+import 'package:lxk_flutter_boilerplate/shared/modules/authentication/bloc/authentication/authentication_bloc.dart';
+import 'package:lxk_flutter_boilerplate/src/config/string_constants.dart'
     as string_constants;
-import '/shared/modules/authentication/bloc/authentication/authentication_event.dart';
-import '/shared/modules/authentication/bloc/authentication/authentication_state.dart';
-import '/src/config/image_constants.dart';
-import '/src/utils/app_state_notifier.dart';
-import '/src/widgets/cache_image_widget.dart';
-import '/src/screens/home/github_repo_list_screen.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/authentication/bloc/authentication/authentication_event.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/authentication/bloc/authentication/authentication_state.dart';
+import 'package:lxk_flutter_boilerplate/src/config/image_constants.dart';
+import 'package:lxk_flutter_boilerplate/src/utils/app_state_notifier.dart';
+import 'package:lxk_flutter_boilerplate/src/widgets/cache_image_widget.dart';
+import 'package:lxk_flutter_boilerplate/src/screens/home/github_repo_list_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});

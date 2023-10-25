@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
-import '/api_sdk/rest/dio_smart_retry/retry_not_supported_exception.dart';
+import 'package:lxk_flutter_boilerplate/api_sdk/rest/dio_smart_retry/retry_not_supported_exception.dart';
 
 import 'default_retry_evaluator.dart';
 import 'http_status_codes.dart';

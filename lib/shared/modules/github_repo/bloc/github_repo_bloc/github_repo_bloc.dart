@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
-import '/shared/modules/github_repo/resources/github_repo_resouces.dart';
-import '/shared/modules/github_repo/bloc/github_repo_bloc/github_repo_event.dart';
-import '/shared/modules/github_repo/bloc/github_repo_bloc/github_repo_state.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/github_repo/resources/github_repo_resouces.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/github_repo/bloc/github_repo_bloc/github_repo_event.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/github_repo/bloc/github_repo_bloc/github_repo_state.dart';
 
 
 class GithubRepoBloc extends Bloc<GithubRepoEvent, GithubRepoState> {

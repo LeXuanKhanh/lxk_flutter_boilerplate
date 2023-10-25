@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import '/shared/modules/animals/models/Animal.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/animals/models/Animal.dart';
 
 abstract class AnimalEvent extends Equatable {
   const AnimalEvent();

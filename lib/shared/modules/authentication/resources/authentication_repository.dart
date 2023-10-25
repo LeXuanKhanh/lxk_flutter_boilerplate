@@ -1,4 +1,4 @@
-import '/api_sdk/api_sdk.dart';
+import 'package:lxk_flutter_boilerplate/api_sdk/api_sdk.dart';
 
 class AuthenticationRepository {
   Future<dynamic> signUpWithEmailAndPassword(

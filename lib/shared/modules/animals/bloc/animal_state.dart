@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import '/shared/modules/animals/models/Animal.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/animals/models/Animal.dart';
 
 abstract class AnimalState extends Equatable {
   final List<Animal> animals;

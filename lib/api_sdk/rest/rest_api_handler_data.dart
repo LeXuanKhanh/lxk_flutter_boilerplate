@@ -1,4 +1,4 @@
-import '/api_sdk/rest/api_helpers/api_base_helper.dart';
+import 'package:lxk_flutter_boilerplate/api_sdk/rest/api_helpers/api_base_helper.dart';
 
 class RestApiHandlerData {
   static final ApiBaseHelper _apiBaseHelper = ApiBaseHelper();

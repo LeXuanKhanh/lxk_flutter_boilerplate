@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import '/src/screens/onboarding/signup_screen.dart';
+import 'package:lxk_flutter_boilerplate/src/screens/onboarding/signup_screen.dart';
 
 import '../../../shared/modules/authentication/bloc/authentication/authentication_bloc.dart';
 import '../../../shared/modules/authentication/bloc/authentication/authentication_state.dart';

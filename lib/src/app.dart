@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:provider/provider.dart';
-import '/shared/index.dart';
-import '/src/routes/nav_observer.dart';
-import '/src/routes/index.dart';
-import '/src/utils/app_state_notifier.dart';
-import '/src/config/theme_data.dart';
+import 'package:lxk_flutter_boilerplate/shared/index.dart';
+import 'package:lxk_flutter_boilerplate/src/routes/nav_observer.dart';
+import 'package:lxk_flutter_boilerplate/src/routes/index.dart';
+import 'package:lxk_flutter_boilerplate/src/utils/app_state_notifier.dart';
+import 'package:lxk_flutter_boilerplate/src/config/theme_data.dart';
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 BuildContext get globalContext => navigatorKey.currentContext!;

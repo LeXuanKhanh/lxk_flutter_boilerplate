@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import '/shared/modules/github_repo/models/repo.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/github_repo/models/repo.dart';
 
 class GithubRepoDataLoadedState extends GithubRepoState {
   final List<Repo> repositoryData;

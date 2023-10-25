@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import '/api_sdk/graphql_method/graphql_operation/mutations/mutations.dart'
+import 'package:lxk_flutter_boilerplate/api_sdk/graphql_method/graphql_operation/mutations/mutations.dart'
     as mutations;
-import '/api_sdk/graphql_method/graphql_operation/queries/readRepositories.dart'
+import 'package:lxk_flutter_boilerplate/api_sdk/graphql_method/graphql_operation/queries/readRepositories.dart'
     as queries;
 import 'package:gql/language.dart';
 import 'package:graphql/client.dart';

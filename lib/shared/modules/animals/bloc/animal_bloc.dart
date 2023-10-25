@@ -1,9 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
-import '/shared/modules/animals/bloc/animal_event.dart';
-import '/shared/modules/animals/bloc/animal_state.dart';
-import '/shared/modules/animals/models/Animal.dart';
-import '/shared/modules/animals/resources/animal_repository.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/animals/bloc/animal_event.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/animals/bloc/animal_state.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/animals/models/Animal.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/animals/resources/animal_repository.dart';
 
 class AnimalBloc extends Bloc<AnimalEvent, AnimalState> {
   final AnimalRepository animalRepo = AnimalRepository();

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '/shared/modules/animals/bloc/animal_bloc.dart';
-import '/shared/modules/animals/bloc/animal_event.dart';
-import '/shared/modules/animals/bloc/animal_state.dart';
-import '/shared/modules/animals/models/Animal.dart';
-import '/src/utils/general_utils.dart';
-import '/src/widgets/cache_image_widget.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/animals/bloc/animal_bloc.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/animals/bloc/animal_event.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/animals/bloc/animal_state.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/animals/models/Animal.dart';
+import 'package:lxk_flutter_boilerplate/src/utils/general_utils.dart';
+import 'package:lxk_flutter_boilerplate/src/widgets/cache_image_widget.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
 class AnimalDetailScreen extends StatefulWidget {

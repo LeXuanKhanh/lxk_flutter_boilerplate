@@ -1,12 +1,12 @@
 import 'package:bloc/bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '/shared/modules/authentication/models/current_user_data.dart';
-import '/shared/modules/authentication/resources/authentication_repository.dart';
-import '/shared/modules/authentication/bloc/authentication/authentication_event.dart';
-import '/shared/modules/authentication/bloc/authentication/authentication_state.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/authentication/models/current_user_data.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/authentication/resources/authentication_repository.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/authentication/bloc/authentication/authentication_event.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/authentication/bloc/authentication/authentication_state.dart';
 
-import '/shared/modules/authentication/models/token.dart';
-import '/shared/modules/authentication/models/user_data.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/authentication/models/token.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/authentication/models/user_data.dart';
 
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {

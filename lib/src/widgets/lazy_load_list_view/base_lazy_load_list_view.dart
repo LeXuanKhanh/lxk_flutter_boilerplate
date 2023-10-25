@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '/src/widgets/lazy_load_list_view/base_load_more_delegate.dart';
+import 'package:lxk_flutter_boilerplate/src/widgets/lazy_load_list_view/base_load_more_delegate.dart';
 import 'package:loadmore/loadmore.dart';
 
 class BaseLazyLoadListView extends StatefulWidget {
