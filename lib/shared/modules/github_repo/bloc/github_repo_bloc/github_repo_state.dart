@@ -1,20 +1,32 @@
 import 'package:equatable/equatable.dart';
 import 'package:lxk_flutter_boilerplate/shared/modules/github_repo/models/repo.dart';
 
-class GithubRepoDataLoadedState extends GithubRepoState {
+abstract class GithubRepoState extends Equatable {
   final List<Repo> repositoryData;
-  const GithubRepoDataLoadedState({required this.repositoryData});
+  const GithubRepoState({required this.repositoryData});
+
   @override
   List<Object> get props => [repositoryData];
 }
 
-abstract class GithubRepoState extends Equatable {
-  const GithubRepoState();
-
-  @override
-  List<Object> get props => [];
+class GithubRepoStateInitial extends GithubRepoState {
+  GithubRepoStateInitial() : super(repositoryData: []);
 }
 
-class GithubRepoStateInitial extends GithubRepoState {}
+class GithubRepoStateLoading extends GithubRepoState {
+  const GithubRepoStateLoading({required super.repositoryData});
+}
 
-class GithubRepoStateLoading extends GithubRepoState {}
+class GithubRepoDataLoadedState extends GithubRepoState {
+  const GithubRepoDataLoadedState({required super.repositoryData});
+}
+
+class GithubRepoStateError extends GithubRepoState {
+  final String message;
+  const GithubRepoStateError({
+    required super.repositoryData,
+    this.message = ''});
+
+  @override
+  List<Object> get props => [message];
+}

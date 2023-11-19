@@ -16,38 +16,41 @@ class GithubRepoListScreen extends StatefulWidget {
 class _GithubRepoListScreenState extends State<GithubRepoListScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<GithubRepoBloc, GithubRepoState>(
+    return BlocConsumer<GithubRepoBloc, GithubRepoState>(
+        listener: (context, state) {
+          if (state is GithubRepoStateError) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(state.message)));
+          }
+        },
         builder: (BuildContext context, GithubRepoState state) {
           if (state is GithubRepoStateLoading) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
-          if (state is GithubRepoDataLoadedState) {
-            return ListView.builder(
-              shrinkWrap: true,
-              itemCount: state.repositoryData.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Column(
-                  children: [
-                    ListTile(
-                      title: Text(
-                        state.repositoryData[index].name.toUpperCase(),
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      trailing: state.repositoryData[index].viewerHasStarred
-                          ? const Icon(Icons.star)
-                          : const SizedBox(),
+          return ListView.builder(
+            shrinkWrap: true,
+            itemCount: state.repositoryData.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Column(
+                children: [
+                  ListTile(
+                    title: Text(
+                      state.repositoryData[index].name.toUpperCase(),
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
-                    const Divider(
-                      height: 10.0,
-                    )
-                  ],
-                );
-              },
-            );
-          }
-          return const SizedBox();
+                    trailing: state.repositoryData[index].viewerHasStarred
+                        ? const Icon(Icons.star)
+                        : const SizedBox(),
+                  ),
+                  const Divider(
+                    height: 10.0,
+                  )
+                ],
+              );
+            },
+          );
         });
   }
 
