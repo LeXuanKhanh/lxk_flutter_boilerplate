@@ -1,4 +1,8 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
+import 'package:lxk_flutter_boilerplate/src/app.dart';
+import 'package:lxk_flutter_boilerplate/src/third_parties/github_sign_in/github_sign_in.dart';
+import 'package:lxk_flutter_boilerplate/src/third_parties/github_sign_in/github_sign_in_result.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:lxk_flutter_boilerplate/shared/modules/authentication/models/current_user_data.dart';
 import 'package:lxk_flutter_boilerplate/shared/modules/authentication/resources/authentication_repository.dart';
@@ -7,6 +11,7 @@ import 'package:lxk_flutter_boilerplate/shared/modules/authentication/bloc/authe
 
 import 'package:lxk_flutter_boilerplate/shared/modules/authentication/models/token.dart';
 import 'package:lxk_flutter_boilerplate/shared/modules/authentication/models/user_data.dart';
+import 'package:lxk_flutter_boilerplate/config_env.dart' as config;
 
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
@@ -18,6 +23,7 @@ class AuthenticationBloc
     on<AppLoadedup>(_mapAppSignUpLoadedState);
     on<UserSignUp>(_mapUserSignupToState);
     on<UserLogin>(_mapUserLoginState);
+    on<GithubLogin>(_githubLogin);
     on<UserLogOut>((event, emit) async {
       final SharedPreferences sharedPreferences = await prefs;
       sharedPreferences.clear();
@@ -101,6 +107,25 @@ class AuthenticationBloc
     } catch (e) {
       emit(AuthenticationFailure(
           message: e.toString()));
+    }
+  }
+
+  void _githubLogin(GithubLogin event, Emitter<AuthenticationState> emit) async {
+    final GitHubSignIn gitHubSignIn = GitHubSignIn(
+        clientId: config.GITHUB_CLIENT_ID,
+        clientSecret: config.GITHUB_CLIENT_SECRET,
+        redirectUrl: config.GITHUB_REDIRECT_URI,
+        title: 'Login with Github');
+    final result = await gitHubSignIn.signIn(globalContext);
+    switch (result.status) {
+      case GitHubSignInResultStatus.ok:
+        debugPrint(result.token);
+        break;
+
+      case GitHubSignInResultStatus.cancelled:
+      case GitHubSignInResultStatus.failed:
+        debugPrint(result.errorMessage);
+        break;
     }
   }
 }

@@ -72,18 +72,33 @@ class _LoginFormState extends State<LoginForm> {
           ElevatedButton(child:
               BlocBuilder<AuthenticationBloc, AuthenticationState>(
                   builder: (BuildContext context, AuthenticationState state) {
-                    return state is AuthenticationLoading ?
-                    CircularProgressIndicator(
-                      backgroundColor: Theme.of(context).textTheme.bodyLarge?.color
-                    ) :
-                    Text('Login', style: Theme.of(context).textTheme.bodyLarge);
-              }),
-              onPressed: () {
-                if (_key.currentState!.validate()) {
-                  context.read<AuthenticationBloc>().add(UserLogin(
+            return state is AuthenticationLoading
+                ? CircularProgressIndicator(
+                    backgroundColor:
+                        Theme.of(context).textTheme.bodyLarge?.color)
+                : Text('Login', style: Theme.of(context).textTheme.bodyLarge);
+          }), onPressed: () {
+            if (_key.currentState!.validate()) {
+              context.read<AuthenticationBloc>().add(UserLogin(
                   email: _emailController.text,
                   password: _passwordController.text));
-                } else {}
+            } else {}
+          }),
+          const SizedBox(
+            height: 16,
+          ),
+          ElevatedButton(child:
+              BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                  builder: (BuildContext context, AuthenticationState state) {
+            return state is AuthenticationLoading
+                ? CircularProgressIndicator(
+                    backgroundColor:
+                        Theme.of(context).textTheme.bodyLarge?.color)
+                : Text('Login with Github', style: Theme.of(context).textTheme.bodyLarge);
+          }), onPressed: () {
+            if (_key.currentState!.validate()) {
+              context.read<AuthenticationBloc>().add(GithubLogin());
+            } else {}
           })
         ],
       ),
