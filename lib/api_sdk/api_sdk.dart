@@ -1,13 +1,34 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:graphql/client.dart';
 import 'package:lxk_flutter_boilerplate/api_sdk/api_constants.dart';
 import 'package:lxk_flutter_boilerplate/api_sdk/graphql_method/graphql_handler.dart';
 import 'package:lxk_flutter_boilerplate/api_sdk/rest/dio_http_handler.dart';
 import 'package:lxk_flutter_boilerplate/shared/modules/authentication/bloc/authentication/authentication_bloc.dart';
 import 'package:lxk_flutter_boilerplate/shared/modules/authentication/bloc/authentication/authentication_event.dart';
 import 'package:lxk_flutter_boilerplate/src/app.dart';
-import 'package:lxk_flutter_boilerplate/src/utils/extension/build_context+extension.dart';
+import 'package:lxk_flutter_boilerplate/src/storage/index.dart';
 
 class ApiSdk {
+  ApiSdk._();
+
+  static final ApiSdk _instance = ApiSdk._();
+  factory ApiSdk() => _instance;
+
+  bool get isGithubConnected => _githubToken.isNotEmpty;
+
+  String _githubToken = '';
+  late GraphqlQlHandler githubRepository;
+
+  Future<void> updateGitHubToken() async {
+    final token = await localStorage.getGitHubToken();
+    _githubToken = token;
+    GraphQLClient ghClient = gitHubClient(_githubToken);
+    githubRepository = GraphqlQlHandler(client: ghClient);
+  }
+
+  Future<void> initializeAsync() async {
+    await updateGitHubToken();
+  }
 
   static simulateTokenExpired() async {
     await Future.delayed(const Duration(seconds: 15));
@@ -34,9 +55,13 @@ class ApiSdk {
     return response;
   }
 
-  static fetchGithubRepoGraphQl(numOfRepositories) async {
-    final GraphqlQlHandler githubRepository =
-        GraphqlQlHandler(client: client());
+  getUserInfo() async {
+    final response = await githubRepository.getUserInfo();
+    return response;
+  }
+
+  fetchGithubRepoGraphQl(numOfRepositories) async {
+    // final GraphqlQlHandler githubRepository = GraphqlQlHandler(client: client());
     final response = await githubRepository.getRepositories(numOfRepositories);
     return response;
   }
@@ -74,6 +99,11 @@ class ApiSdk {
         '${apiConstants["mock"]}/$id'
     );
     return response;
+  }
+
+  Future<void> logout() async {
+    _githubToken = '';
+    localStorage.setGitHubToken('');
   }
 
 }

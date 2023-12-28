@@ -30,10 +30,10 @@ enum RouteName {
 
   String get path {
     if (this == RouteName.splashScreen) {
-      return 'package:lxk_flutter_boilerplate/';
+      return '/';
     }
 
-    return '$this'.replaceAll('RouteName.', 'package:lxk_flutter_boilerplate/');
+    return '$this'.replaceAll('RouteName.', '/');
   }
 
   RoutePredicate get modalRoute {

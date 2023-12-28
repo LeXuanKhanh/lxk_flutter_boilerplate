@@ -1,8 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter/foundation.dart';
-import 'package:lxk_flutter_boilerplate/src/app.dart';
-import 'package:lxk_flutter_boilerplate/src/third_parties/github_sign_in/github_sign_in.dart';
-import 'package:lxk_flutter_boilerplate/src/third_parties/github_sign_in/github_sign_in_result.dart';
+import 'package:lxk_flutter_boilerplate/api_sdk/api_sdk.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:lxk_flutter_boilerplate/shared/modules/authentication/models/current_user_data.dart';
 import 'package:lxk_flutter_boilerplate/shared/modules/authentication/resources/authentication_repository.dart';
@@ -11,7 +8,6 @@ import 'package:lxk_flutter_boilerplate/shared/modules/authentication/bloc/authe
 
 import 'package:lxk_flutter_boilerplate/shared/modules/authentication/models/token.dart';
 import 'package:lxk_flutter_boilerplate/shared/modules/authentication/models/user_data.dart';
-import 'package:lxk_flutter_boilerplate/config_env.dart' as config;
 
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
@@ -23,10 +19,10 @@ class AuthenticationBloc
     on<AppLoadedup>(_mapAppSignUpLoadedState);
     on<UserSignUp>(_mapUserSignupToState);
     on<UserLogin>(_mapUserLoginState);
-    on<GithubLogin>(_githubLogin);
     on<UserLogOut>((event, emit) async {
       final SharedPreferences sharedPreferences = await prefs;
       sharedPreferences.clear();
+      await ApiSdk().logout();
       emit(UserLogoutState());
     });
     on<UserTokenExpired>((event, emit) async {
@@ -45,7 +41,10 @@ class AuthenticationBloc
       AppLoadedup event, Emitter<AuthenticationState> emit) async {
     emit(AuthenticationLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 500)); // a simulated delay
+      // a simulated delay
+      await Future.delayed(const Duration(milliseconds: 500));
+      await ApiSdk().initializeAsync();
+
       final SharedPreferences sharedPreferences = await prefs;
       if (sharedPreferences.getString('authtoken') != null) {
         emit(AppAutheticated());
@@ -107,25 +106,6 @@ class AuthenticationBloc
     } catch (e) {
       emit(AuthenticationFailure(
           message: e.toString()));
-    }
-  }
-
-  void _githubLogin(GithubLogin event, Emitter<AuthenticationState> emit) async {
-    final GitHubSignIn gitHubSignIn = GitHubSignIn(
-        clientId: config.GITHUB_CLIENT_ID,
-        clientSecret: config.GITHUB_CLIENT_SECRET,
-        redirectUrl: config.GITHUB_REDIRECT_URI,
-        title: 'Login with Github');
-    final result = await gitHubSignIn.signIn(globalContext);
-    switch (result.status) {
-      case GitHubSignInResultStatus.ok:
-        debugPrint(result.token);
-        break;
-
-      case GitHubSignInResultStatus.cancelled:
-      case GitHubSignInResultStatus.failed:
-        debugPrint(result.errorMessage);
-        break;
     }
   }
 }

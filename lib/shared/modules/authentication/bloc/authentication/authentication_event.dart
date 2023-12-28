@@ -32,6 +32,4 @@ class UserLogin extends AuthenticationEvent {
   List<Object> get props => [email, password];
 }
 
-class GithubLogin extends AuthenticationEvent {}
-
 class UserTokenExpired extends AuthenticationEvent {}

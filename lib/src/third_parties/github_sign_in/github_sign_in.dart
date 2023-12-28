@@ -28,7 +28,7 @@ class GitHubSignIn {
     required this.clientId,
     required this.clientSecret,
     required this.redirectUrl,
-    this.scope = "user,gist,user:email",
+    this.scope = "user,repo",
     this.title = "",
     this.centerTitle,
     this.allowSignUp = true,

@@ -3,7 +3,7 @@ import 'package:lxk_flutter_boilerplate/shared/modules/github_repo/models/repo.d
 
 class GithubRepoResources {
   static Future<List<Repo>> getData() async {
-    final response = await ApiSdk.fetchGithubRepoGraphQl(10);
+    final response = await ApiSdk().fetchGithubRepoGraphQl(10);
     final List<dynamic> repos =
         response.data['viewer']['repositories']['nodes'] as List<dynamic>;
 
@@ -16,5 +16,10 @@ class GithubRepoResources {
         .toList();
 
     return listOfRepos;
+  }
+
+  Future<dynamic> getUserInfo() async {
+    final response = await ApiSdk().getUserInfo();
+    return response.data;
   }
 }

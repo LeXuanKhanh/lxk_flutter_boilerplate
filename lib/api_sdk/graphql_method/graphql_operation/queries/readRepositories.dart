@@ -19,5 +19,16 @@ const String testSubscription = r'''
         id
         name
       }
-		}
+		} 
+''';
+
+const String userInfo = r'''
+query {
+  viewer {
+    login
+    avatarUrl
+    email
+    name
+  }
+}
 ''';

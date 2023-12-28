@@ -30,3 +30,7 @@ class GithubRepoStateError extends GithubRepoState {
   @override
   List<Object> get props => [message];
 }
+
+class GithubConnectSuccess extends GithubRepoState {
+  GithubConnectSuccess() : super(repositoryData: []);
+}

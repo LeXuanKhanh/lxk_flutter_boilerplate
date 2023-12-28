@@ -16,14 +16,13 @@ GraphQLCache cache = GraphQLCache(
   },
 );
 
-//For the rest.
-GraphQLClient client() {
+GraphQLClient gitHubClient(String token) {
   final HttpLink httpLink = HttpLink(
     'https://api.github.com/graphql',
   );
 
   final AuthLink authLink = AuthLink(
-    getToken: () => 'Bearer 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',
+    getToken: () => 'Bearer $token',
   );
 
   final Link link = authLink.concat(httpLink);

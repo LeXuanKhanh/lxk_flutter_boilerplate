@@ -38,4 +38,14 @@ class GraphqlQlHandler {
 
     return await client.mutate(options);
   }
+
+  Future<QueryResult> getUserInfo() async {
+    final WatchQueryOptions options = WatchQueryOptions(
+      document: parseString(queries.userInfo),
+      pollInterval: const Duration(seconds: 4),
+      fetchResults: true,
+    );
+
+    return await client.query(options);
+  }
 }

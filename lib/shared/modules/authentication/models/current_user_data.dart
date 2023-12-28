@@ -9,6 +9,11 @@ class CurrentUserData {
     ad = json['ad'] != null ? Ad.fromJson(json['ad']) : Ad();
   }
 
+  CurrentUserData.fromJsonUserInfo(Map<String, dynamic> json) {
+    data = json['viewer'] != null ? Data.fromJsonGraphQl(json['viewer']) : Data();
+    // ad = json['ad'] != null ? Ad.fromJson(json['ad']) : Ad();
+  }
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['data'] = this.data.toJson();
@@ -37,6 +42,13 @@ class Data {
     firstName = json['first_name'];
     lastName = json['last_name'];
     avatar = json['avatar'];
+  }
+
+  Data.fromJsonGraphQl(Map<String, dynamic> json) {
+    email = json['email'];
+    firstName = json['login'];
+    lastName = json['name'];
+    avatar = json['avatarUrl'];
   }
 
   Map<String, dynamic> toJson() {
