@@ -1,5 +1,9 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lxk_flutter_boilerplate/api_sdk/api_sdk.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/github_repo/bloc/github_repo_bloc/github_repo_bloc.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/github_repo/bloc/github_repo_bloc/github_repo_event.dart';
+import 'package:lxk_flutter_boilerplate/src/app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:lxk_flutter_boilerplate/shared/modules/authentication/models/current_user_data.dart';
 import 'package:lxk_flutter_boilerplate/shared/modules/authentication/resources/authentication_repository.dart';
@@ -22,7 +26,9 @@ class AuthenticationBloc
     on<UserLogOut>((event, emit) async {
       final SharedPreferences sharedPreferences = await prefs;
       sharedPreferences.clear();
-      await ApiSdk().logout();
+      if (globalContext.mounted) {
+        globalContext.read<GithubRepoBloc>().add(GithubLogOut());
+      }
       emit(UserLogoutState());
     });
     on<UserTokenExpired>((event, emit) async {

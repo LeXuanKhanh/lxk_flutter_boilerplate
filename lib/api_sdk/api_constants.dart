@@ -28,7 +28,7 @@ GraphQLClient gitHubClient(String token) {
   final Link link = authLink.concat(httpLink);
 
   return GraphQLClient(
-    cache: cache,
+    cache: GraphQLCache(),
     link: link,
   );
 }

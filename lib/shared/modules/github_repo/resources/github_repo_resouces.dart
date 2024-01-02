@@ -1,4 +1,5 @@
 import 'package:lxk_flutter_boilerplate/api_sdk/api_sdk.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/authentication/models/current_user_data.dart';
 import 'package:lxk_flutter_boilerplate/shared/modules/github_repo/models/repo.dart';
 
 class GithubRepoResources {
@@ -18,8 +19,8 @@ class GithubRepoResources {
     return listOfRepos;
   }
 
-  Future<dynamic> getUserInfo() async {
+  static Future<CurrentUserData> getUserInfo() async {
     final response = await ApiSdk().getUserInfo();
-    return response.data;
+    return CurrentUserData.fromGithubGraphQL(response.data);
   }
 }

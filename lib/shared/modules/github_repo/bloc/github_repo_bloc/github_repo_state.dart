@@ -1,36 +1,53 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:lxk_flutter_boilerplate/api_sdk/api_sdk.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/authentication/models/current_user_data.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/authentication/models/user_data.dart';
 import 'package:lxk_flutter_boilerplate/shared/modules/github_repo/models/repo.dart';
 
-abstract class GithubRepoState extends Equatable {
+enum GithubStatus {
+  initial,
+  loading,
+  error,
+  connected,
+  dataLoaded,
+  userDataLoaded
+}
+
+class GithubRepoState extends Equatable {
   final List<Repo> repositoryData;
-  const GithubRepoState({required this.repositoryData});
-
-  @override
-  List<Object> get props => [repositoryData];
-}
-
-class GithubRepoStateInitial extends GithubRepoState {
-  GithubRepoStateInitial() : super(repositoryData: []);
-}
-
-class GithubRepoStateLoading extends GithubRepoState {
-  const GithubRepoStateLoading({required super.repositoryData});
-}
-
-class GithubRepoDataLoadedState extends GithubRepoState {
-  const GithubRepoDataLoadedState({required super.repositoryData});
-}
-
-class GithubRepoStateError extends GithubRepoState {
   final String message;
-  const GithubRepoStateError({
-    required super.repositoryData,
-    this.message = ''});
+  final CurrentUserData? userData;
+  final GithubStatus status;
+
+  bool get isConnected => ApiSdk().isGithubConnected;
+
+  const GithubRepoState({
+    this.status = GithubStatus.initial,
+    this.repositoryData = const [],
+    this.message = '',
+    this.userData,
+  });
+
+  GithubRepoState copyWith({GithubStatus? status, List<Repo>? repositoryData,
+      String? message, CurrentUserData? userData}) {
+    return GithubRepoState(
+      status: status ?? this.status,
+      repositoryData: repositoryData ?? this.repositoryData,
+      message: message ?? this.message,
+      userData: userData ?? this.userData,
+    );
+  }
+
+  GithubRepoState toStateLoading() {
+    return copyWith(status: GithubStatus.loading);
+  }
+
+  GithubRepoState toStateError({String message = ''})  {
+    return copyWith(status: GithubStatus.error, message: message);
+  }
 
   @override
-  List<Object> get props => [message];
-}
-
-class GithubConnectSuccess extends GithubRepoState {
-  GithubConnectSuccess() : super(repositoryData: []);
+  List<Object?> get props =>
+      [status, repositoryData, message, userData];
 }

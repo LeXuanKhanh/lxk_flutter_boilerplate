@@ -48,7 +48,6 @@ class _AnimalDetailScreenState extends State<AnimalDetailScreen> {
   Future<void> _showSuccessDialog(BuildContext context) async {
     final title =
         animal != null ? 'Update successfully' : 'Create successfully';
-    await Future.delayed(const Duration(milliseconds: 300));
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -113,9 +112,6 @@ class _AnimalDetailScreenState extends State<AnimalDetailScreen> {
       }, builder: (context, state) {
         if (state is AnimalLoading) {
           context.loaderOverlay.show();
-          // return const Center(
-          //   child: CircularProgressIndicator.adaptive(),
-          // );
         } else {
           context.loaderOverlay.hide();
         }

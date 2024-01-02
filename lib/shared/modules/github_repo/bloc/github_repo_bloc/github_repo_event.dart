@@ -10,3 +10,7 @@ abstract class GithubRepoEvent extends Equatable {
 class GithubRepoDataLoadingEvent extends GithubRepoEvent {}
 
 class GithubConnect extends GithubRepoEvent {}
+
+class GithubGetUserInfo extends GithubRepoEvent {}
+
+class GithubLogOut extends GithubRepoEvent {}

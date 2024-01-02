@@ -1,3 +1,5 @@
+import 'package:graphql/client.dart';
+
 class AppException implements Exception {
   final _message;
   final _prefix;
@@ -25,4 +27,9 @@ class UnauthorisedException extends AppException {
 
 class InvalidInputException extends AppException {
   InvalidInputException([String message = ""]) : super(message, "Invalid Input: ");
+}
+
+class GraphQLException extends AppException {
+  final OperationException? exception;
+  GraphQLException(this.exception) : super(exception?.toString() ?? '', "GraphQL error: ");
 }

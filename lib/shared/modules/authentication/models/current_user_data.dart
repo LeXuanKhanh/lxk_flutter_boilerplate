@@ -9,7 +9,7 @@ class CurrentUserData {
     ad = json['ad'] != null ? Ad.fromJson(json['ad']) : Ad();
   }
 
-  CurrentUserData.fromJsonUserInfo(Map<String, dynamic> json) {
+  CurrentUserData.fromGithubGraphQL(Map<String, dynamic> json) {
     data = json['viewer'] != null ? Data.fromJsonGraphQl(json['viewer']) : Data();
     // ad = json['ad'] != null ? Ad.fromJson(json['ad']) : Ad();
   }

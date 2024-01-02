@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:lxk_flutter_boilerplate/src/screens/animal/animal_detail_screen.dart';
 import 'package:lxk_flutter_boilerplate/src/screens/home/index.dart';
-import 'package:lxk_flutter_boilerplate/src/screens/onboarding/authentication_screen.dart';
+import 'package:lxk_flutter_boilerplate/src/screens/authentication/authentication_screen.dart';
 import 'package:lxk_flutter_boilerplate/src/splash_screen.dart';
 
 Route routes(RouteSettings settings) {

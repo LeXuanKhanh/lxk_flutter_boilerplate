@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:lxk_flutter_boilerplate/api_sdk/rest/curl_logger_interceptor.dart';
-import 'dio_smart_retry/retry_interceptor.dart';
+import 'package:lxk_flutter_boilerplate/api_sdk/rest/dio_smart_retry/retry_interceptor.dart';
 
 class DioResult {
   final dynamic result;

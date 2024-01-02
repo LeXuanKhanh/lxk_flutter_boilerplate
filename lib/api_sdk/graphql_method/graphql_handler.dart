@@ -6,6 +6,7 @@ import 'package:lxk_flutter_boilerplate/api_sdk/graphql_method/graphql_operation
     as queries;
 import 'package:gql/language.dart';
 import 'package:graphql/client.dart';
+import 'package:lxk_flutter_boilerplate/api_sdk/rest/api_helpers/api_exception.dart';
 
 class GraphqlQlHandler {
   final GraphQLClient client;
@@ -22,7 +23,12 @@ class GraphqlQlHandler {
       fetchResults: true,
     );
 
-    return await client.query(options);
+    final result = await client.query(options);
+    if (result.exception != null) {
+      throw GraphQLException(result.exception);
+    }
+
+    return result;
   }
 
   Future<QueryResult> toggleRepoStar(dynamic repo) async {
@@ -36,7 +42,12 @@ class GraphqlQlHandler {
       },
     );
 
-    return await client.mutate(options);
+    final result = await client.mutate(options);
+    if (result.exception != null) {
+      throw GraphQLException(result.exception);
+    }
+
+    return result;
   }
 
   Future<QueryResult> getUserInfo() async {
@@ -46,6 +57,11 @@ class GraphqlQlHandler {
       fetchResults: true,
     );
 
-    return await client.query(options);
+    final result = await client.query(options);
+    if (result.exception != null) {
+      throw GraphQLException(result.exception);
+    }
+
+    return result;
   }
 }

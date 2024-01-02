@@ -5,31 +5,30 @@ import 'package:lxk_flutter_boilerplate/shared/modules/github_repo/bloc/github_r
 import 'package:lxk_flutter_boilerplate/shared/modules/github_repo/bloc/github_repo_bloc/github_repo_state.dart';
 import 'package:flutter/widgets.dart';
 import 'package:lxk_flutter_boilerplate/src/app.dart';
-import 'package:lxk_flutter_boilerplate/src/storage/index.dart';
 import 'package:lxk_flutter_boilerplate/src/third_parties/github_sign_in/github_sign_in.dart';
 import 'package:lxk_flutter_boilerplate/src/third_parties/github_sign_in/github_sign_in_result.dart';
 import 'package:lxk_flutter_boilerplate/config_env.dart' as config;
 
 class GithubRepoBloc extends Bloc<GithubRepoEvent, GithubRepoState> {
-
-  bool get isConnected => ApiSdk().isGithubConnected;
-
-  GithubRepoBloc() : super(GithubRepoStateInitial()) {
+  GithubRepoBloc() : super(const GithubRepoState()) {
     on<GithubRepoDataLoadingEvent>(onGithubRepoDataLoadingEvent);
     on<GithubConnect>(onGithubConnectEvent);
+    on<GithubLogOut>(onGithubLogOut);
+    on<GithubGetUserInfo>(onGithubGetUserInfo);
   }
 
   onGithubRepoDataLoadingEvent(
       GithubRepoDataLoadingEvent event, Emitter<GithubRepoState> emit) async {
     // ignore: unnecessary_type_check
     if (event is GithubRepoDataLoadingEvent) {
-      emit(const GithubRepoStateLoading(repositoryData: []));
+      emit(state.toStateLoading());
       try {
         final fetchedData = await GithubRepoResources.getData();
-        emit(GithubRepoDataLoadedState(repositoryData: fetchedData));
-      } catch (e, stackTrace){
+        emit(state.copyWith(
+            status: GithubStatus.dataLoaded, repositoryData: fetchedData));
+      } catch (e, stackTrace) {
         debugPrintStack(label: e.toString(), stackTrace: stackTrace);
-        emit(GithubRepoStateError(repositoryData: const [], message: e.toString()));
+        emit(state.toStateError(message: e.toString()));
       }
     }
   }
@@ -45,23 +44,43 @@ class GithubRepoBloc extends Bloc<GithubRepoEvent, GithubRepoState> {
     switch (result.status) {
       case GitHubSignInResultStatus.ok:
         debugPrint(result.token);
-        emit(const GithubRepoStateLoading(repositoryData: []));
+        emit(state.toStateLoading());
         await Future.delayed(const Duration(milliseconds: 500));
 
         if (result.token == null || result.token!.isEmpty) {
-          emit(const GithubRepoStateError(repositoryData: [], message: 'github token not found'));
+          emit(state.toStateError(message: 'github token not found'));
           return;
         }
 
-        await localStorage.setGitHubToken(result.token!);
-        await ApiSdk().updateGitHubToken();
-        emit(GithubConnectSuccess());
+        await ApiSdk().updateGitHubToken(token: result.token!);
+        emit(state.copyWith(status: GithubStatus.connected));
+        add(GithubGetUserInfo());
+        add(GithubRepoDataLoadingEvent());
         break;
 
       case GitHubSignInResultStatus.cancelled:
       case GitHubSignInResultStatus.failed:
-        emit(const GithubRepoStateError(repositoryData: [], message: 'failed to get token from github'));
+        emit(state.toStateError(message: 'failed to get token from github'));
         break;
     }
+  }
+
+  onGithubGetUserInfo(
+      GithubGetUserInfo event, Emitter<GithubRepoState> emit) async {
+    emit(state.toStateLoading());
+    try {
+      final data = await GithubRepoResources.getUserInfo();
+      emit(state.copyWith(
+          status: GithubStatus.userDataLoaded, userData: data));
+    } catch (e, stackTrace) {
+      debugPrintStack(label: e.toString(), stackTrace: stackTrace);
+      emit(state.toStateError(message: e.toString()));
+    }
+  }
+
+  onGithubLogOut(GithubLogOut event, Emitter<GithubRepoState> emit) async {
+    emit(state.toStateLoading());
+    await ApiSdk().resetGithubToken();
+    emit(const GithubRepoState());
   }
 }

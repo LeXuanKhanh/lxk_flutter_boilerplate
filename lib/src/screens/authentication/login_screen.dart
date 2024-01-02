@@ -88,12 +88,12 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   Widget elevatedButtonChild(GithubRepoState state, BuildContext context) {
-    if (state is GithubRepoStateLoading) {
+    if (state.status == GithubStatus.loading) {
       return CircularProgressIndicator(
           backgroundColor: Theme.of(context).textTheme.bodyLarge?.color);
     }
 
-    if (context.read<GithubRepoBloc>().isConnected) {
+    if (state.isConnected) {
       return Text('Connected with Github',
           style: Theme.of(context)
               .textTheme
@@ -106,7 +106,7 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   void onTapGithubButton() {
-    if (context.read<GithubRepoBloc>().state is GithubRepoStateLoading) {
+    if (context.read<GithubRepoBloc>().state.status == GithubStatus.loading) {
       return;
     }
 
@@ -124,7 +124,7 @@ class _LoginFormState extends State<LoginForm> {
           BlocBuilder<GithubRepoBloc, GithubRepoState>(
               builder: (BuildContext context, GithubRepoState state) {
             return ElevatedButton(
-                onPressed: context.read<GithubRepoBloc>().isConnected
+                onPressed: state.isConnected
                     ? null
                     : onTapGithubButton,
                 child: elevatedButtonChild(state, context));

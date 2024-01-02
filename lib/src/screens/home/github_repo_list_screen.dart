@@ -18,13 +18,14 @@ class _GithubRepoListScreenState extends State<GithubRepoListScreen> {
   Widget build(BuildContext context) {
     return BlocConsumer<GithubRepoBloc, GithubRepoState>(
         listener: (context, state) {
-          if (state is GithubRepoStateError) {
+          if (state.status == GithubStatus.error) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(state.message)));
           }
         },
         builder: (BuildContext context, GithubRepoState state) {
-          if (state is GithubRepoStateLoading) {
+          debugPrint(state.toString());
+          if (state.status == GithubStatus.loading) {
             return const Center(
               child: CircularProgressIndicator(),
             );

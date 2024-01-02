@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:lxk_flutter_boilerplate/src/screens/onboarding/signup_screen.dart';
+import 'package:lxk_flutter_boilerplate/src/screens/authentication/signup_screen.dart';
 
-import '../../../shared/modules/authentication/bloc/authentication/authentication_bloc.dart';
-import '../../../shared/modules/authentication/bloc/authentication/authentication_state.dart';
-import 'login_screen.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/authentication/bloc/authentication/authentication_bloc.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/authentication/bloc/authentication/authentication_state.dart';
+import 'package:lxk_flutter_boilerplate/src/screens/authentication/login_screen.dart';
 
 
 class AuthenticationScreen extends StatefulWidget {

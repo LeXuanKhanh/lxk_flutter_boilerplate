@@ -13,20 +13,26 @@ class ApiSdk {
 
   static final ApiSdk _instance = ApiSdk._();
   factory ApiSdk() => _instance;
-
+  
   bool get isGithubConnected => _githubToken.isNotEmpty;
 
   String _githubToken = '';
   late GraphqlQlHandler githubRepository;
 
-  Future<void> updateGitHubToken() async {
-    final token = await localStorage.getGitHubToken();
+  Future<void> initializeAsync() async {
+    _githubToken = await localStorage.getGitHubToken();
+    GraphQLClient ghClient = gitHubClient(_githubToken);
+    githubRepository = GraphqlQlHandler(client: ghClient);
+  }
+
+  Future<void> updateGitHubToken({String token = ''}) async {
+    await localStorage.setGitHubToken(token);
     _githubToken = token;
     GraphQLClient ghClient = gitHubClient(_githubToken);
     githubRepository = GraphqlQlHandler(client: ghClient);
   }
 
-  Future<void> initializeAsync() async {
+  Future<void> resetGithubToken() async {
     await updateGitHubToken();
   }
 
@@ -61,7 +67,6 @@ class ApiSdk {
   }
 
   fetchGithubRepoGraphQl(numOfRepositories) async {
-    // final GraphqlQlHandler githubRepository = GraphqlQlHandler(client: client());
     final response = await githubRepository.getRepositories(numOfRepositories);
     return response;
   }
@@ -99,11 +104,6 @@ class ApiSdk {
         '${apiConstants["mock"]}/$id'
     );
     return response;
-  }
-
-  Future<void> logout() async {
-    _githubToken = '';
-    localStorage.setGitHubToken('');
   }
 
 }

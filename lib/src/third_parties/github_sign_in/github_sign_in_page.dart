@@ -42,6 +42,7 @@ class _GitHubSignInPageState extends State<GitHubSignInPage> {
     if (widget.clearCache) {
       await controller.clearCache();
       await controller.clearLocalStorage();
+      // await WebViewCookieManager().clearCookies();
     }
     await controller.setNavigationDelegate(
       NavigationDelegate(
