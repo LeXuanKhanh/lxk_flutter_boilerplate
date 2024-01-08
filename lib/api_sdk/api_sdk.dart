@@ -13,7 +13,7 @@ class ApiSdk {
 
   static final ApiSdk _instance = ApiSdk._();
   factory ApiSdk() => _instance;
-  
+
   bool get isGithubConnected => _githubToken.isNotEmpty;
 
   String _githubToken = '';

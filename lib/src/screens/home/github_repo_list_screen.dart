@@ -58,6 +58,7 @@ class _GithubRepoListScreenState extends State<GithubRepoListScreen> {
   @override
   void initState() {
     context.read<GithubRepoBloc>().add(GithubRepoDataLoadingEvent());
+    context.read<GithubRepoBloc>().add(GithubGetUserInfo());
     super.initState();
   }
 }

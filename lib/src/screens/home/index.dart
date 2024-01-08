@@ -82,6 +82,41 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           const SizedBox(height: 16),
+          const Divider(height: 1, color: Colors.grey),
+          state.userData == null
+              ? const Padding(
+                padding: EdgeInsets.only(left: 16, right: 16, top: 8),
+                child: Text('Can\'t get github user info'),
+              )
+              : Padding(
+                  padding: const EdgeInsets.only(left: 16, right: 16, top: 8),
+                  child: Column(children: [
+                    Container(
+                      clipBehavior: Clip.antiAlias,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                      ),
+                      child: CachedImage(
+                        imageUrl: state.userData!.data.avatar,
+                        fit: BoxFit.contain,
+                        errorWidget: Image.network(
+                          AllImages().kDefaultImage,
+                        ),
+                        width: 80,
+                        height: 80,
+                        placeholder: const CircularProgressIndicator(),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                        '${state.userData!.data.firstName} - ${state.userData!.data.lastName}',
+                        style: Theme.of(context).textTheme.bodyMedium),
+                    const SizedBox(height: 8),
+                    Text(state.userData!.data.email,
+                        style: Theme.of(context).textTheme.bodyMedium),
+                  ]),
+                ),
+          const SizedBox(height: 8),
           const Divider(height: 1, color: Colors.grey)
         ],
       );
