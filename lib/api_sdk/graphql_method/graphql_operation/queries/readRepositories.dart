@@ -7,6 +7,10 @@ const String readRepositories = r'''
           id
           name
           viewerHasStarred
+          url
+          stargazerCount
+          isFork
+          forkCount
         }
       }
     }

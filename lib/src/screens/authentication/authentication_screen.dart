@@ -6,6 +6,7 @@ import 'package:lxk_flutter_boilerplate/src/screens/authentication/signup_screen
 import 'package:lxk_flutter_boilerplate/shared/modules/authentication/bloc/authentication/authentication_bloc.dart';
 import 'package:lxk_flutter_boilerplate/shared/modules/authentication/bloc/authentication/authentication_state.dart';
 import 'package:lxk_flutter_boilerplate/src/screens/authentication/login_screen.dart';
+import 'package:lxk_flutter_boilerplate/src/utils/extension/text_widget+extension.dart';
 
 
 class AuthenticationScreen extends StatefulWidget {
@@ -80,7 +81,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyLarge,
-                                          ),
+                                          ).onColorSurface,
                                           onPressed: () {
                                             setState(() {
                                               showLoginForm = false;

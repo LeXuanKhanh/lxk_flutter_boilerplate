@@ -6,32 +6,32 @@ import 'package:lxk_flutter_boilerplate/src/config/color_constants.dart';
 
 class ThemeConfig {
   static ThemeData get darkTheme => createTheme(
-        brightness: Brightness.dark,
-        background: ColorConstants.darkScaffoldBackgroundColor,
-        cardBackground: ColorConstants.secondaryDarkAppColor,
-        primaryText: Colors.white,
-        secondaryText: Colors.white,
-        accentColor: ColorConstants.secondaryDarkAppColor,
-        divider: Colors.black45,
-        buttonBackground: Colors.white,
-        buttonText: ColorConstants.secondaryDarkAppColor,
-        disabled: ColorConstants.secondaryDarkAppColor,
-        error: Colors.red,
-      );
+      brightness: Brightness.dark,
+      background: ColorConstants.darkScaffoldBackgroundColor,
+      cardBackground: ColorConstants.secondaryDarkAppColor,
+      primaryText: Colors.white,
+      secondaryText: Colors.white,
+      accentColor: ColorConstants.secondaryDarkAppColor,
+      divider: Colors.black45,
+      buttonBackground: Colors.white,
+      buttonText: ColorConstants.secondaryDarkAppColor,
+      disabled: ColorConstants.secondaryDarkAppColor,
+      error: Colors.red,
+      onSurfaceColor: ColorConstants.onColorSurfaceDarkColor);
 
   static ThemeData get lightTheme => createTheme(
-        brightness: Brightness.light,
-        background: ColorConstants.lightScaffoldBackgroundColor,
-        cardBackground: ColorConstants.secondaryAppColor,
-        primaryText: Colors.black,
-        secondaryText: Colors.black,
-        accentColor: ColorConstants.secondaryAppColor,
-        divider: ColorConstants.secondaryAppColor,
-        buttonBackground: Colors.black38,
-        buttonText: ColorConstants.secondaryAppColor,
-        disabled: ColorConstants.secondaryAppColor,
-        error: Colors.red,
-      );
+      brightness: Brightness.light,
+      background: ColorConstants.lightScaffoldBackgroundColor,
+      cardBackground: ColorConstants.secondaryAppColor,
+      primaryText: Colors.black,
+      secondaryText: Colors.black,
+      accentColor: ColorConstants.secondaryAppColor,
+      divider: ColorConstants.secondaryAppColor,
+      buttonBackground: Colors.black38,
+      buttonText: ColorConstants.secondaryAppColor,
+      disabled: ColorConstants.secondaryAppColor,
+      error: Colors.red,
+      onSurfaceColor: ColorConstants.onColorSurfaceColor);
 
   static ThemeData createTheme({
     required Brightness brightness,
@@ -45,6 +45,7 @@ class ThemeConfig {
     required Color cardBackground,
     required Color disabled,
     required Color error,
+    required Color onSurfaceColor,
   }) {
     final baseTextTheme = brightness == Brightness.dark
         ? Typography.blackMountainView
@@ -79,23 +80,23 @@ class ThemeConfig {
             SystemUiOverlayStyle(statusBarBrightness: brightness),
         color: cardBackground,
         iconTheme: IconThemeData(
-          color: secondaryText,
+          color: onSurfaceColor,
         ),
         toolbarTextStyle: TextTheme(
           bodyLarge: baseTextTheme.bodyLarge?.copyWith(
-            color: secondaryText,
+            color: onSurfaceColor,
             fontSize: 18,
           ),
         ).bodyMedium,
         titleTextStyle: TextTheme(
           bodyLarge: baseTextTheme.bodyLarge?.copyWith(
-            color: secondaryText,
+            color: onSurfaceColor,
             fontSize: 18,
           ),
         ).titleLarge,
       ),
       iconTheme: IconThemeData(
-        color: secondaryText,
+        color: onSurfaceColor,
         size: 16.0,
       ),
       buttonTheme: ButtonThemeData(
@@ -204,31 +205,57 @@ class ThemeConfig {
         cursorColor: accentColor,
         selectionColor: accentColor,
         selectionHandleColor: accentColor,
-      ), checkboxTheme: CheckboxThemeData(
- fillColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
- if (states.contains(MaterialState.disabled)) { return null; }
- if (states.contains(MaterialState.selected)) { return accentColor; }
- return null;
- }),
- ), radioTheme: RadioThemeData(
- fillColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
- if (states.contains(MaterialState.disabled)) { return null; }
- if (states.contains(MaterialState.selected)) { return accentColor; }
- return null;
- }),
- ), switchTheme: SwitchThemeData(
- thumbColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
- if (states.contains(MaterialState.disabled)) { return null; }
- if (states.contains(MaterialState.selected)) { return accentColor; }
- return null;
- }),
- trackColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
- if (states.contains(MaterialState.disabled)) { return null; }
- if (states.contains(MaterialState.selected)) { return accentColor; }
- return null;
- }),
- ), colorScheme: ColorScheme.fromSwatch()
-          .copyWith(secondary: accentColor, brightness: brightness).copyWith(background: background).copyWith(error: error),
+      ),
+      checkboxTheme: CheckboxThemeData(
+        fillColor: MaterialStateProperty.resolveWith<Color?>(
+            (Set<MaterialState> states) {
+          if (states.contains(MaterialState.disabled)) {
+            return null;
+          }
+          if (states.contains(MaterialState.selected)) {
+            return accentColor;
+          }
+          return null;
+        }),
+      ),
+      radioTheme: RadioThemeData(
+        fillColor: MaterialStateProperty.resolveWith<Color?>(
+            (Set<MaterialState> states) {
+          if (states.contains(MaterialState.disabled)) {
+            return null;
+          }
+          if (states.contains(MaterialState.selected)) {
+            return accentColor;
+          }
+          return null;
+        }),
+      ),
+      switchTheme: SwitchThemeData(
+        thumbColor: MaterialStateProperty.resolveWith<Color?>(
+            (Set<MaterialState> states) {
+          if (states.contains(MaterialState.disabled)) {
+            return null;
+          }
+          if (states.contains(MaterialState.selected)) {
+            return accentColor;
+          }
+          return null;
+        }),
+        trackColor: MaterialStateProperty.resolveWith<Color?>(
+            (Set<MaterialState> states) {
+          if (states.contains(MaterialState.disabled)) {
+            return null;
+          }
+          if (states.contains(MaterialState.selected)) {
+            return accentColor;
+          }
+          return null;
+        }),
+      ),
+      colorScheme: ColorScheme.fromSwatch()
+          .copyWith(secondary: accentColor, brightness: brightness)
+          .copyWith(background: background)
+          .copyWith(error: error),
     );
   }
 }

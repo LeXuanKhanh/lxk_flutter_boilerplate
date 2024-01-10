@@ -7,6 +7,8 @@ import 'package:lxk_flutter_boilerplate/shared/modules/github_repo/bloc/github_r
 import 'package:lxk_flutter_boilerplate/shared/modules/authentication/bloc/authentication/authentication_bloc.dart';
 import 'package:lxk_flutter_boilerplate/shared/modules/authentication/bloc/authentication/authentication_event.dart';
 import 'package:lxk_flutter_boilerplate/shared/modules/authentication/bloc/authentication/authentication_state.dart';
+import 'package:lxk_flutter_boilerplate/src/config/color_constants.dart';
+import 'package:lxk_flutter_boilerplate/src/utils/extension/text_widget+extension.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -72,8 +74,8 @@ class _LoginFormState extends State<LoginForm> {
               builder: (BuildContext context, AuthenticationState state) {
         return state is AuthenticationLoading
             ? CircularProgressIndicator(
-                backgroundColor: Theme.of(context).textTheme.bodyLarge?.color)
-            : Text('Login', style: Theme.of(context).textTheme.bodyLarge);
+                backgroundColor: ColorConstants.onColorSurfaceColor)
+            : Text('Login', style: Theme.of(context).textTheme.bodyLarge).onColorSurface;
       }), onPressed: () {
         if (_key.currentState!.validate()) {
           context.read<AuthenticationBloc>().add(UserLogin(
@@ -95,14 +97,12 @@ class _LoginFormState extends State<LoginForm> {
 
     if (state.isConnected) {
       return Text('Connected with Github',
-          style: Theme.of(context)
-              .textTheme
-              .bodyLarge
-              ?.copyWith(color: Theme.of(context).primaryColor));
+              style: Theme.of(context).textTheme.bodyLarge).color(Theme.of(context).primaryColor);
     }
 
     return Text('Login with Github',
-        style: Theme.of(context).textTheme.bodyLarge);
+            style: Theme.of(context).textTheme.bodyLarge)
+        .onColorSurface;
   }
 
   void onTapGithubButton() {
@@ -124,9 +124,7 @@ class _LoginFormState extends State<LoginForm> {
           BlocBuilder<GithubRepoBloc, GithubRepoState>(
               builder: (BuildContext context, GithubRepoState state) {
             return ElevatedButton(
-                onPressed: state.isConnected
-                    ? null
-                    : onTapGithubButton,
+                onPressed: state.isConnected ? null : onTapGithubButton,
                 child: elevatedButtonChild(state, context));
           }),
         ],

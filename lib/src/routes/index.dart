@@ -1,8 +1,10 @@
 // routes for the app
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lxk_flutter_boilerplate/src/screens/animal/animal_detail_screen.dart';
 import 'package:lxk_flutter_boilerplate/src/screens/home/index.dart';
 import 'package:lxk_flutter_boilerplate/src/screens/authentication/authentication_screen.dart';
+import 'package:lxk_flutter_boilerplate/src/screens/webview/webview_screen.dart';
 import 'package:lxk_flutter_boilerplate/src/splash_screen.dart';
 
 Route routes(RouteSettings settings) {
@@ -26,7 +28,8 @@ enum RouteName {
   splashScreen,
   home,
   auth,
-  animalDetail;
+  animalDetail,
+  webView;
 
   String get path {
     if (this == RouteName.splashScreen) {
@@ -42,7 +45,7 @@ enum RouteName {
 }
 
 final _routeConfigMap =
-    <String, MaterialPageRoute<dynamic> Function(RouteSettings)>{
+    <String, PageRoute<dynamic> Function(RouteSettings)>{
   RouteName.splashScreen.path: (RouteSettings s) =>
       MaterialPageRoute(builder: (_) => const SplashScreen(), settings: s),
   RouteName.home.path: (RouteSettings s) =>
@@ -51,4 +54,8 @@ final _routeConfigMap =
       builder: (_) => const AuthenticationScreen(), settings: s),
   RouteName.animalDetail.path: (RouteSettings s) => MaterialPageRoute(
       builder: (_) => const AnimalDetailScreen(), settings: s),
+  RouteName.webView.path: (RouteSettings s) => CupertinoPageRoute(
+      fullscreenDialog: true,
+      builder: (_) => const WebViewScreen(),
+      settings: s),
 };

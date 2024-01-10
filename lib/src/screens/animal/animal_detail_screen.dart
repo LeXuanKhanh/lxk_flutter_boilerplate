@@ -4,6 +4,7 @@ import 'package:lxk_flutter_boilerplate/shared/modules/animals/bloc/animal_bloc.
 import 'package:lxk_flutter_boilerplate/shared/modules/animals/bloc/animal_event.dart';
 import 'package:lxk_flutter_boilerplate/shared/modules/animals/bloc/animal_state.dart';
 import 'package:lxk_flutter_boilerplate/shared/modules/animals/models/Animal.dart';
+import 'package:lxk_flutter_boilerplate/src/utils/extension/text_widget+extension.dart';
 import 'package:lxk_flutter_boilerplate/src/utils/general_utils.dart';
 import 'package:lxk_flutter_boilerplate/src/widgets/cache_image_widget.dart';
 import 'package:loader_overlay/loader_overlay.dart';
@@ -76,7 +77,7 @@ class _AnimalDetailScreenState extends State<AnimalDetailScreen> {
         title: Text(
           animal != null ? 'Edit Animal' : 'Create Animal',
           style: Theme.of(context).textTheme.bodyLarge,
-        ),
+        ).onColorSurface,
         actions: [
           IconButton(
               icon: Icon(animal != null ? Icons.edit : Icons.add, size: 26.0),

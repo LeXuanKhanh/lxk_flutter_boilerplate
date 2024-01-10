@@ -15,4 +15,6 @@ class ColorConstants {
   static Color darkScaffoldBackgroundColor = const Color(0xff2F2E2E);
   static Color secondaryAppColor = const Color(0xff5e92f3);
   static Color secondaryDarkAppColor = Colors.white;
+  static Color onColorSurfaceColor = Colors.white;
+  static Color onColorSurfaceDarkColor = Colors.black;
 }

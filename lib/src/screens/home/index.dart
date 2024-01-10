@@ -6,6 +6,7 @@ import 'package:lxk_flutter_boilerplate/shared/modules/github_repo/bloc/github_r
 import 'package:lxk_flutter_boilerplate/shared/modules/github_repo/bloc/github_repo_bloc/github_repo_state.dart';
 import 'package:lxk_flutter_boilerplate/src/routes/index.dart';
 import 'package:lxk_flutter_boilerplate/src/screens/animal/animal_list_screen.dart';
+import 'package:lxk_flutter_boilerplate/src/utils/extension/text_widget+extension.dart';
 import 'package:provider/provider.dart';
 
 import 'package:lxk_flutter_boilerplate/shared/modules/authentication/bloc/authentication/authentication_bloc.dart';
@@ -142,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 title: Text(
                   string_constants.app_bar_title,
                   style: Theme.of(context).textTheme.bodyLarge,
-                ),
+                ).onColorSurface,
                 actions: actionOptions(context),
               ),
               body: IndexedStack(
@@ -203,19 +204,28 @@ class _HomeScreenState extends State<HomeScreen> {
                                   .textTheme
                                   .bodyMedium
                                   ?.copyWith(color: Colors.white)),
-                          // Switch(
-                          //   value: Provider.of<AppStateNotifier>(context)
-                          //       .isDarkMode,
-                          //   onChanged: (value) {
-                          //     Provider.of<AppStateNotifier>(context,
-                          //             listen: false)
-                          //         .updateTheme(value);
-                          //   },
-                          // ),
                         ],
                       ),
                     ),
                     githubConnectWidget(),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16.0),
+                      child: Row(
+                        children: [
+                          const Text('Light Mode'),
+                          Switch(
+                            value: Provider.of<AppStateNotifier>(context)
+                                .isDarkMode,
+                            onChanged: (value) {
+                              Provider.of<AppStateNotifier>(context,
+                                      listen: false)
+                                  .updateTheme(value);
+                            },
+                          ),
+                          const Text('Dark Mode')
+                        ],
+                      ),
+                    ),
                     ListTile(
                         title: InkWell(
                             child: Text('Log out',
