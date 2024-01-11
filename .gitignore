@@ -47,4 +47,8 @@ app.*.map.json
 /android/app/release
 
 lib/api_sdk/api_constants.dart
-lib/config_env.dart
+lib/src/config/config_env.dart
+
+#generated files
+*.freezed.dart
+*.g.dart

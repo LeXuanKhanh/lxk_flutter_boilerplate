@@ -7,7 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:lxk_flutter_boilerplate/src/app.dart';
 import 'package:lxk_flutter_boilerplate/src/third_parties/github_sign_in/github_sign_in.dart';
 import 'package:lxk_flutter_boilerplate/src/third_parties/github_sign_in/github_sign_in_result.dart';
-import 'package:lxk_flutter_boilerplate/config_env.dart' as config;
+import 'package:lxk_flutter_boilerplate/src/config/config_env.dart' as config;
 
 class GithubRepoBloc extends Bloc<GithubRepoEvent, GithubRepoState> {
   GithubRepoBloc() : super(const GithubRepoState()) {

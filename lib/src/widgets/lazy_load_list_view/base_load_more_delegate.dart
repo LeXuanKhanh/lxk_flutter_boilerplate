@@ -19,9 +19,9 @@ class BaseLoadMoreDelegate extends LoadMoreDelegate {
     if (status == LoadMoreStatus.loading) {
       return Container(
         alignment: Alignment.center,
-        child: Row(
+        child: const Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
+          children: <Widget>[
             SizedBox(
               width: 30,
               height: 30,

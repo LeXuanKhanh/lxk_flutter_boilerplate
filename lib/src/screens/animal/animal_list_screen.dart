@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lxk_flutter_boilerplate/shared/modules/animals/bloc/animal_bloc.dart';
 import 'package:lxk_flutter_boilerplate/shared/modules/animals/bloc/animal_event.dart';
 import 'package:lxk_flutter_boilerplate/shared/modules/animals/bloc/animal_state.dart';
-import 'package:lxk_flutter_boilerplate/src/routes/index.dart';
+import 'package:lxk_flutter_boilerplate/src/routes/routes.dart';
 import 'package:lxk_flutter_boilerplate/src/widgets/lazy_load_list_view/base_lazy_load_list_view.dart';
 
 class AnimalListScreen extends StatefulWidget {

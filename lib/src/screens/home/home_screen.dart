@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lxk_flutter_boilerplate/shared/modules/github_repo/bloc/github_repo_bloc/github_repo_bloc.dart';
 import 'package:lxk_flutter_boilerplate/shared/modules/github_repo/bloc/github_repo_bloc/github_repo_event.dart';
 import 'package:lxk_flutter_boilerplate/shared/modules/github_repo/bloc/github_repo_bloc/github_repo_state.dart';
-import 'package:lxk_flutter_boilerplate/src/routes/index.dart';
+import 'package:lxk_flutter_boilerplate/src/routes/routes.dart';
 import 'package:lxk_flutter_boilerplate/src/screens/animal/animal_list_screen.dart';
 import 'package:lxk_flutter_boilerplate/src/utils/extension/text_widget+extension.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +20,7 @@ import 'package:lxk_flutter_boilerplate/src/widgets/cache_image_widget.dart';
 import 'package:lxk_flutter_boilerplate/src/screens/home/github_repo_list_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({super.key});
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();

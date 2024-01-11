@@ -1,4 +1,3 @@
-import 'package:lxk_flutter_boilerplate/api_sdk/api_sdk.dart';
 import 'package:lxk_flutter_boilerplate/shared/modules/authentication/bloc/authentication/authentication_bloc.dart';
 import 'package:lxk_flutter_boilerplate/shared/modules/authentication/bloc/authentication/authentication_event.dart';
 import 'package:lxk_flutter_boilerplate/shared/modules/authentication/bloc/authentication/authentication_state.dart';
@@ -7,7 +6,7 @@ import 'package:lxk_flutter_boilerplate/src/config/image_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lxk_flutter_boilerplate/src/routes/nav_observer.dart';
-import 'package:lxk_flutter_boilerplate/src/routes/index.dart';
+import 'package:lxk_flutter_boilerplate/src/routes/routes.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

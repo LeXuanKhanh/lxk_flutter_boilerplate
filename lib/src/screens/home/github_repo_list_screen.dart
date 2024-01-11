@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lxk_flutter_boilerplate/shared/modules/github_repo/bloc/github_repo_bloc/github_repo_bloc.dart';
 import 'package:lxk_flutter_boilerplate/shared/modules/github_repo/bloc/github_repo_bloc/github_repo_event.dart';
 import 'package:lxk_flutter_boilerplate/shared/modules/github_repo/bloc/github_repo_bloc/github_repo_state.dart';
-import 'package:lxk_flutter_boilerplate/src/routes/index.dart';
+import 'package:lxk_flutter_boilerplate/src/routes/routes.dart';
 import 'package:lxk_flutter_boilerplate/src/utils/extension/text_widget+extension.dart';
 
 class GithubRepoListScreen extends StatefulWidget {
@@ -46,27 +46,43 @@ class _GithubRepoListScreenState extends State<GithubRepoListScreen> {
                     item.name.toUpperCase(),
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
-                  subtitle: Column(
+                  subtitle: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SizedBox(height: 4),
-                      Row(children: [
-                        const Icon(Icons.star,
-                            color: Colors.amberAccent, size: 20),
-                        const SizedBox(width: 4),
-                        Text('${item.stargazerCount}')
-                      ]),
-                      const SizedBox(height: 4),
-                      Row(children: [
-                        const Icon(Icons.merge, size: 20),
-                        const SizedBox(width: 4),
-                        Text('${item.forkCount}')
-                      ]),
-                      const SizedBox(height: 4),
-                      Visibility(
-                          visible: item.isFork,
-                          child: const Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text('Forked Project'))),
+                      Column(
+                        children: [
+                        const SizedBox(height: 4),
+                        Row(children: [
+                          const Icon(Icons.star,
+                              color: Colors.amberAccent, size: 20),
+                          const SizedBox(width: 4),
+                          Text('${item.stargazerCount}')
+                        ]),
+                      ],),
+                      Column(
+                        children: [
+                          const SizedBox(height: 4),
+                          Row(children: [
+                            const Icon(Icons.star,
+                                color: Colors.amberAccent, size: 20),
+                            const SizedBox(width: 4),
+                            Text('${item.stargazerCount}')
+                          ]),
+                          const SizedBox(height: 4),
+                          Row(children: [
+                            const Icon(Icons.merge, size: 20),
+                            const SizedBox(width: 4),
+                            Text('${item.forkCount}')
+                          ]),
+                          const SizedBox(height: 4),
+                          Visibility(
+                              visible: item.isFork,
+                              child: const Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text('Forked Project'))),
+                        ],
+                      ),
                     ],
                   ),
                 ),
