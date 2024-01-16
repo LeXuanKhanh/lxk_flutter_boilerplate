@@ -1,16 +1,25 @@
 const String readRepositories = r'''
-  query ReadRepositories($nRepositories: Int!) {
+query ReadRepositories($first: Int!, $cursor: String) {
     viewer {
-      repositories(last: $nRepositories) {
-        nodes {
-          __typename
-          id
-          name
-          viewerHasStarred
-          url
-          stargazerCount
-          isFork
-          forkCount
+      repositories(first: $first, after: $cursor) {
+        totalCount
+        edges {
+          cursor
+          node {
+            __typename
+            id
+            name
+            viewerHasStarred
+            url
+            stargazerCount
+            isFork
+            forkCount
+            createdAt
+          }
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
         }
       }
     }

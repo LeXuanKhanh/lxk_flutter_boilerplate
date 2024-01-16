@@ -14,3 +14,7 @@ class GithubConnect extends GithubRepoEvent {}
 class GithubGetUserInfo extends GithubRepoEvent {}
 
 class GithubLogOut extends GithubRepoEvent {}
+
+class RefreshListRepo extends GithubRepoEvent {}
+
+class LoadMoreListRepo extends GithubRepoEvent {}

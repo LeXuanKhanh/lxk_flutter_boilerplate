@@ -7,14 +7,9 @@ import 'package:lxk_flutter_boilerplate/shared/modules/animals/resources/animal_
 
 class AnimalBloc extends Bloc<AnimalEvent, AnimalState> {
   final AnimalRepository animalRepo = AnimalRepository();
-
-  int page = 1;
   final int limit = 15;
-  List<Animal> animals = [];
-  bool canLoadMore = true;
-  Animal? currentAnimal;
 
-  AnimalBloc() : super(AnimalInitial()) {
+  AnimalBloc() : super(const AnimalState()) {
     on<RefreshAnimalList>(_refreshListAnimal);
     on<LoadMoreAnimalList>(_loadMoreListAnimal);
     on<CreateAnimal>(_createAnimal);
@@ -22,88 +17,87 @@ class AnimalBloc extends Bloc<AnimalEvent, AnimalState> {
     on<DeleteAnimal>(_deleteAnimal);
   }
 
-  void _refreshListAnimal(RefreshAnimalList event, Emitter<AnimalState> emit) async {
-    emit(AnimalLoading(animals: animals, canLoadMore: canLoadMore));
-    page = 1;
-    canLoadMore = true;
-    final res = await animalRepo.getAnimals(page, limit);
-    final list = animalListFromJsonList(res); //animalListFromJson(res);
-    animals = [];
-    if (list.isNotEmpty) {
-      canLoadMore = true;
-      page++;
-      animals.addAll(list);
-    } else {
-      canLoadMore = false;
-    }
-
-    emit(NewAnimalListData(animals: animals, canLoadMore: canLoadMore));
-    // try {
-    //   final res = await animalRepo.getAnimals(page, limit);
-    //   final list = animalListFromJsonList(res); //animalListFromJson(res);
-    //   animals = list;
-    //   if (list.isNotEmpty) {
-    //     canLoadMore = true;
-    //     page++;
-    //     animals.addAll(list);
-    //   } else {
-    //     canLoadMore = false;
-    //   }
-    //
-    //   emit(NewAnimalListData(animals: animals, canLoadMore: canLoadMore));
-    // } catch (e,stackTrace) {
-    //   debugPrintStack(stackTrace: stackTrace);
-    //   emit(AnimalFailure(message: e.toString()));
-    // }
-  }
-
-  void _loadMoreListAnimal(LoadMoreAnimalList event, Emitter<AnimalState> emit) async {
-    emit(AnimalLoading(animals: animals, canLoadMore: canLoadMore));
+  void _refreshListAnimal(RefreshAnimalList event,
+      Emitter<AnimalState> emit) async {
+    emit(state.toStateLoading());
     try {
-      final data = await animalRepo.getAnimals(page, limit);
-      final list = animalListFromJsonList(data);
-      if (list.isNotEmpty) {
-        canLoadMore = true;
-        page++;
-        animals.addAll(list);
-      } else {
+      const int page = 1;
+      bool canLoadMore = true;
+      final res = await animalRepo.getAnimals(page, limit);
+      final newList = animalListFromJsonList(res); //animalListFromJson(res);
+      final List<Animal> totalList = [];
+      if (newList.length < limit) {
         canLoadMore = false;
+      } else if (newList.isNotEmpty) {
+        totalList.addAll(newList);
       }
 
-      emit(NewAnimalListData(animals: animals, canLoadMore: canLoadMore));
+      emit(state.copyWith(
+          status: AnimalStatus.newList,
+          animals: totalList,
+          page: page,
+          canLoadMore: canLoadMore
+      ));
+    } catch (e, stacktrace) {
+      debugPrintStack(label: e.toString(), stackTrace: stacktrace);
+      emit(state.toStateError(message: e.toString()));
+    }
+  }
+
+  void _loadMoreListAnimal(LoadMoreAnimalList event,
+      Emitter<AnimalState> emit) async {
+    emit(state.toStateLoading());
+    try {
+      final int page = state.page + 1;
+      bool canLoadMore = true;
+      final totalList = List<Animal>.from(state.animals);
+      final data = await animalRepo.getAnimals(page, limit);
+      final newList = animalListFromJsonList(data);
+      if (newList.length < limit) {
+        canLoadMore = false;
+      } else if (newList.isNotEmpty) {
+        totalList.addAll(newList);
+      }
+
+      emit(state.copyWith(
+          status: AnimalStatus.newList,
+          animals: totalList,
+          page: page,
+          canLoadMore: canLoadMore
+      ));
     } catch (e, stackTrace) {
       debugPrintStack(stackTrace: stackTrace);
-      emit(AnimalFailure(
-          message: e.toString(),
-          animals: animals,
-          canLoadMore: canLoadMore));
+      emit(state.toStateError(message: e.toString()));
     }
   }
 
   void _createAnimal(CreateAnimal event, Emitter<AnimalState> emit) async {
-    emit(AnimalLoading(animals: animals, canLoadMore: canLoadMore));
+    emit(state.toStateLoading());
     try {
       var newAnimal = event.animal;
       final data = await animalRepo.createAnimal(newAnimal.toJson());
       newAnimal = Animal.fromJson(data);
-      emit(NewAnimalData(animal: newAnimal, animals: animals, canLoadMore: canLoadMore));
+      emit(state.copyWith(
+        status: AnimalStatus.newData,
+        animal: newAnimal,
+      ));
       add(RefreshAnimalList());
     } catch (e, stacktrace) {
       debugPrintStack(label: e.toString(), stackTrace: stacktrace);
-      emit(AnimalFailure(
-          message: e.toString(),
-          animals: animals,
-          canLoadMore: canLoadMore));
+      emit(state.toStateError(message: e.toString()));
     }
   }
 
   void _editAnimal(EditAnimal event, Emitter<AnimalState> emit) async {
-    emit(AnimalLoading(animals: animals, canLoadMore: canLoadMore));
+    emit(state.toStateLoading());
     try {
       var editAnimal = event.animal.copyWith();
       final data = await animalRepo.editAnimal(event.id, editAnimal.toJson());
       final newAnimal = Animal.fromJson(data);
-      emit(NewAnimalData(animal: newAnimal, animals: animals, canLoadMore: canLoadMore));
+      emit(state.copyWith(
+        status: AnimalStatus.newData,
+        animal: newAnimal,
+      ));
       add(RefreshAnimalList());
       //final newAnimal = Animal.fromJson(data);
       // var editIndex = animals.indexWhere((element) => element.id == newAnimal.id);
@@ -111,24 +105,17 @@ class AnimalBloc extends Bloc<AnimalEvent, AnimalState> {
       // emit(NewAnimalListData(animals: animals, canLoadMore: canLoadMore));
     } catch (e, stacktrace) {
       debugPrintStack(label: e.toString(), stackTrace: stacktrace);
-      emit(AnimalFailure(
-          message: e.toString(),
-          animals: animals,
-          canLoadMore: canLoadMore));
+      emit(state.toStateError(message: e.toString()));
     }
   }
 
   void _deleteAnimal(DeleteAnimal event, Emitter<AnimalState> emit) async {
-    emit(AnimalLoading(animals: animals, canLoadMore: canLoadMore));
+    emit(state.toStateLoading());
     try {
       await animalRepo.deleteAnimal(event.id);
       add(RefreshAnimalList());
     } catch (e) {
-      emit(AnimalFailure(
-          message: e.toString(),
-          animals: animals,
-          canLoadMore: canLoadMore));
+      emit(state.toStateError(message: e.toString()));
     }
   }
-
 }

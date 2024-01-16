@@ -102,16 +102,16 @@ class _AnimalDetailScreenState extends State<AnimalDetailScreen> {
       ),
       body: BlocConsumer<AnimalBloc, AnimalState>(listener: (context, state) {
         // print(state.runtimeType);
-        if (state is AnimalFailure) {
+        if (state.status == AnimalStatus.error) {
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text(state.message)));
         }
 
-        if (state is NewAnimalData) {
+        if (state.status == AnimalStatus.error) {
           _showSuccessDialog(context);
         }
       }, builder: (context, state) {
-        if (state is AnimalLoading) {
+        if (state.status == AnimalStatus.loading) {
           context.loaderOverlay.show();
         } else {
           context.loaderOverlay.hide();

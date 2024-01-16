@@ -13,11 +13,12 @@ class GraphqlQlHandler {
 
   GraphqlQlHandler({required this.client});
 
-  Future<QueryResult> getRepositories(int numOfRepositories) async {
+  Future<QueryResult> getRepositories(int numOfRepositories, String? cursor) async {
     final WatchQueryOptions options = WatchQueryOptions(
       document: parseString(queries.readRepositories),
       variables: <String, dynamic>{
-        'nRepositories': numOfRepositories,
+        'first': numOfRepositories,
+        'cursor': cursor
       },
       pollInterval: const Duration(seconds: 4),
       fetchResults: true,

@@ -44,20 +44,20 @@ class ApiSdk {
   }
 
   static loginWithEmailAndPassword(dynamic body) async {
-    final response = await DioHttpHandler().post(
-        '${apiConstants["auth"]}/login', data: body);
+    final response = await DioHttpHandler()
+        .post('${apiConstants["auth"]}/login', data: body);
     return response;
   }
 
   static signUpWithEmailAndPassword(dynamic body) async {
-    final response = await DioHttpHandler().post(
-        '${apiConstants["auth"]}/register', data: body);
+    final response = await DioHttpHandler()
+        .post('${apiConstants["auth"]}/register', data: body);
     return response;
   }
 
   static getUserData(int id) async {
-    final response = await DioHttpHandler().get(
-        '${apiConstants["auth"]}/users/$id');
+    final response =
+        await DioHttpHandler().get('${apiConstants["auth"]}/users/$id');
     return response;
   }
 
@@ -66,44 +66,38 @@ class ApiSdk {
     return response;
   }
 
-  fetchGithubRepoGraphQl(numOfRepositories) async {
-    final response = await githubRepository.getRepositories(numOfRepositories);
+  fetchGithubRepoGraphQl(int numOfRepositories, String? cursor) async {
+    final response =
+        await githubRepository.getRepositories(numOfRepositories, cursor);
     return response;
   }
 
   static getAnimals(int page, int limit) async {
-    final response = await DioHttpHandler().get(
-        '${apiConstants["mock"]}',
-        queryParameters: { 'page': page, 'limit': limit });
+    final response = await DioHttpHandler().get('${apiConstants["mock"]}',
+        queryParameters: {'page': page, 'limit': limit});
     return response;
   }
-  
+
   static getAnimal(int id) async {
     final response = await DioHttpHandler().get('${apiConstants["mock"]}/$id');
     return response;
   }
 
   static addAnimal(body) async {
-    final response = await DioHttpHandler().post(
-        '${apiConstants["mock"]}',
-        data: body
-    );
+    final response =
+        await DioHttpHandler().post('${apiConstants["mock"]}', data: body);
     return response;
   }
 
   static editAnimal(int id, body) async {
-    final response = await DioHttpHandler().put(
-        '${apiConstants["mock"]}/$id',
-        data: body
-    );
+    final response =
+        await DioHttpHandler().put('${apiConstants["mock"]}/$id', data: body);
     return response;
   }
 
   static deleteAnimal(int id) async {
-    final response = await DioHttpHandler().delete(
-        '${apiConstants["mock"]}/$id'
-    );
+    final response =
+        await DioHttpHandler().delete('${apiConstants["mock"]}/$id');
     return response;
   }
-
 }

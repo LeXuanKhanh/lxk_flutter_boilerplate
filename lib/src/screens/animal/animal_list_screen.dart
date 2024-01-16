@@ -29,27 +29,27 @@ class _AnimalListScreenState extends State<AnimalListScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AnimalBloc, AnimalState>(listener: (context, state) {
-      if (state is AnimalFailure) {
+      if (state.status == AnimalStatus.error) {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(state.message)));
       }
     }, builder: (BuildContext context, AnimalState state) {
-      //debugPrint('current state: ${state.runtimeType} ${state.animals.length}');
+      debugPrint(state.status.toString());
       final animals = state.animals;
       return BaseLazyLoadListView(
           key: _listViewKey,
           onRefresh: () {
             context.read<AnimalBloc>().add(RefreshAnimalList());
             return context.read<AnimalBloc>().stream.firstWhere((element) {
-              return element is NewAnimalListData;
+              return element.status == AnimalStatus.newList;
             });
           },
           canLoadMore: state.canLoadMore,
           onLoadMore: () async {
-            await Future.delayed(const Duration(seconds: 1));
+            // await Future.delayed(const Duration(seconds: 1));
             context.read<AnimalBloc>().add(LoadMoreAnimalList());
             await context.read<AnimalBloc>().stream.firstWhere((element) {
-              return element is NewAnimalListData;
+              return element.status == AnimalStatus.newList;
             });
             return Future.value();
           },

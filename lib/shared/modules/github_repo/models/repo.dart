@@ -1,12 +1,30 @@
+import 'dart:convert';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
+import 'package:intl/intl.dart';
 
 part 'repo.freezed.dart';
 part 'repo.g.dart';
 
+List<Repo> repoFromJsonStr(String str) =>
+    List<Repo>.from(json.decode(str).map((x) => Repo.fromJson(x)));
+List<Repo> repoFromJsonArr(List<dynamic> jsonArr) =>
+    jsonArr.map((dynamic e) => Repo.fromJson(e)).toList();
+
 @freezed
 class Repo with _$Repo {
   const factory Repo({
+    required String cursor,
+    required Node node,
+  }) = _Repo;
+
+  factory Repo.fromJson(Map<String, dynamic> json) => _$RepoFromJson(json);
+}
+
+@freezed
+class Node with _$Node {
+  const factory Node({
     required String id,
     required String name,
     required bool viewerHasStarred,
@@ -14,8 +32,14 @@ class Repo with _$Repo {
     required int stargazerCount,
     required bool isFork,
     required int forkCount,
-  }) = _Repo;
+    required DateTime? createdAt,
+  }) = _Node;
 
-  factory Repo.fromJson(Map<String, Object?> json)
-  => _$RepoFromJson(json);
+  const Node._();
+
+  String get createAtDateFormatted => createdAt != null
+      ? DateFormat('dd-MM-yyyy').format(createdAt!)
+      : '';
+
+  factory Node.fromJson(Map<String, dynamic> json) => _$NodeFromJson(json);
 }

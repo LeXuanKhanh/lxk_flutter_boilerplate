@@ -1,45 +1,35 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:lxk_flutter_boilerplate/shared/modules/animals/models/Animal.dart';
+import 'package:flutter/foundation.dart';
 
-abstract class AnimalState extends Equatable {
-  final List<Animal> animals;
-  final bool canLoadMore;
+part 'animal_state.freezed.dart';
 
-  const AnimalState({required this.animals, required this.canLoadMore});
-
-  @override
-  List<Object> get props => [animals, canLoadMore];
+enum AnimalStatus {
+  initial,
+  loading,
+  error,
+  newList,
+  newData,
 }
 
-class AnimalInitial extends AnimalState {
-  AnimalInitial() : super(animals: [], canLoadMore: true);
-}
+@freezed
+class AnimalState with _$AnimalState {
+  const factory AnimalState({
+    @Default(AnimalStatus.initial) AnimalStatus status,
+    @Default([]) List<Animal> animals,
+    Animal? animal,
+    @Default(1) int page,
+    @Default(true) bool canLoadMore,
+    @Default('') String message,
+  }) = _AnimalState;
 
-class AnimalLoading extends AnimalState {
-  const AnimalLoading({required super.animals, required super.canLoadMore});
-}
+  const AnimalState._();
 
-class NewAnimalListData extends AnimalState {
-  const NewAnimalListData({required super.animals, required super.canLoadMore});
-}
+  AnimalState toStateLoading() {
+    return copyWith(status: AnimalStatus.loading);
+  }
 
-class NewAnimalData extends AnimalState {
-  final Animal animal;
-  const NewAnimalData({
-    required this.animal,
-    required super.animals,
-    required super.canLoadMore
-  });
-}
-
-class AnimalFailure extends AnimalState {
-  final String message;
-
-  const AnimalFailure({this.message = '',
-    required super.animals,
-    required super.canLoadMore
-  });
-
-  @override
-  List<Object> get props => [message];
+  AnimalState toStateError({String message = ''}) {
+    return copyWith(status: AnimalStatus.error);
+  }
 }

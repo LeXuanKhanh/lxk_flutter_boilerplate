@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:lxk_flutter_boilerplate/src/widgets/lazy_load_list_view/base_load_more_delegate.dart';
 import 'package:loadmore/loadmore.dart';
 
@@ -10,6 +11,8 @@ class BaseLazyLoadListView extends StatefulWidget {
   final Widget Function(BuildContext context, int index) itemBuilder;
   final bool isEmpty;
   final int? itemCount;
+  final EdgeInsets padding;
+  final TargetPlatform? customPlatform;
 
   const BaseLazyLoadListView(
       {super.key,
@@ -18,7 +21,9 @@ class BaseLazyLoadListView extends StatefulWidget {
       required this.onLoadMore,
       required this.isEmpty,
       required this.itemCount,
-      required this.itemBuilder});
+      required this.itemBuilder,
+      this.padding = const EdgeInsets.all(0),
+      this.customPlatform});
 
   @override
   State<BaseLazyLoadListView> createState() => BaseLazyLoadListViewState();
@@ -30,17 +35,23 @@ class BaseLazyLoadListViewState extends State<BaseLazyLoadListView> {
 
   // https://github.com/flutter/flutter/issues/70971
   final ScrollController _controller = ScrollController(initialScrollOffset: 1);
+  TargetPlatform platform = TargetPlatform.iOS;
+
+  @override
+  void didChangeDependencies() {
+    platform = widget.customPlatform ?? Theme.of(context).platform;
+    super.didChangeDependencies();
+  }
 
   Widget _emptyView() {
     return const SliverFillRemaining(
-      child: Center(
-        child: Text("No results found."),
+        child: Center(
+      child: Text("No results found."),
     ));
   }
 
   void showRefresh() async {
-    final ThemeData theme = Theme.of(context);
-    if (theme.platform == TargetPlatform.android) {
+    if (platform == TargetPlatform.android) {
       _refreshIndicatorKey.currentState?.show();
     } else {
       /*
@@ -59,8 +70,7 @@ class BaseLazyLoadListViewState extends State<BaseLazyLoadListView> {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-    if (theme.platform == TargetPlatform.android) {
+    if (platform == TargetPlatform.android) {
       return RefreshIndicator(
         key: _refreshIndicatorKey,
         onRefresh: widget.onRefresh,
@@ -82,6 +92,7 @@ class BaseLazyLoadListViewState extends State<BaseLazyLoadListView> {
                       .onError((error, stackTrace) => false);
                 },
                 child: ListView.builder(
+                  padding: widget.padding,
                   controller: _controller,
                   shrinkWrap: true,
                   itemCount: widget.itemCount,
@@ -102,20 +113,23 @@ class BaseLazyLoadListViewState extends State<BaseLazyLoadListView> {
         ),
         widget.isEmpty
             ? _emptyView()
-            : LoadMore(
-                textBuilder: DefaultLoadMoreTextBuilder.english,
-                isFinish: !widget.canLoadMore,
-                delegate: const BaseLoadMoreDelegate(),
-                onLoadMore: () {
-                  return widget
-                      .onLoadMore()
-                      .then((value) => true)
-                      .onError((error, stackTrace) => false);
-                },
-                child: SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    widget.itemBuilder,
-                    childCount: widget.itemCount,
+            : SliverPadding(
+                padding: widget.padding,
+                sliver: LoadMore(
+                  textBuilder: DefaultLoadMoreTextBuilder.english,
+                  isFinish: !widget.canLoadMore,
+                  delegate: const BaseLoadMoreDelegate(),
+                  onLoadMore: () {
+                    return widget
+                        .onLoadMore()
+                        .then((value) => true)
+                        .onError((error, stackTrace) => false);
+                  },
+                  child: SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      widget.itemBuilder,
+                      childCount: widget.itemCount,
+                    ),
                   ),
                 ),
               ),

@@ -1,9 +1,12 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:lxk_flutter_boilerplate/api_sdk/api_sdk.dart';
 import 'package:lxk_flutter_boilerplate/shared/modules/authentication/models/current_user_data.dart';
-import 'package:lxk_flutter_boilerplate/shared/modules/authentication/models/user_data.dart';
 import 'package:lxk_flutter_boilerplate/shared/modules/github_repo/models/repo.dart';
+
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
+
+part 'github_repo_state.freezed.dart';
 
 enum GithubStatus {
   initial,
@@ -14,40 +17,27 @@ enum GithubStatus {
   userDataLoaded
 }
 
-class GithubRepoState extends Equatable {
-  final List<Repo> repositoryData;
-  final String message;
-  final CurrentUserData? userData;
-  final GithubStatus status;
+@freezed
+class GithubRepoState with _$GithubRepoState {
+  const factory GithubRepoState({
+    @Default(GithubStatus.initial) GithubStatus status,
+    @Default('') String message,
+    CurrentUserData? userData,
+    @Default([]) List<Repo> repositoryData,
+    @Default(1) int page,
+    @Default(true) bool canLoadMore,
+    String? cursor
+  }) = _GithubRepoState;
+
+  const GithubRepoState._();
 
   bool get isConnected => ApiSdk().isGithubConnected;
-
-  const GithubRepoState({
-    this.status = GithubStatus.initial,
-    this.repositoryData = const [],
-    this.message = '',
-    this.userData,
-  });
-
-  GithubRepoState copyWith({GithubStatus? status, List<Repo>? repositoryData,
-      String? message, CurrentUserData? userData}) {
-    return GithubRepoState(
-      status: status ?? this.status,
-      repositoryData: repositoryData ?? this.repositoryData,
-      message: message ?? this.message,
-      userData: userData ?? this.userData,
-    );
-  }
 
   GithubRepoState toStateLoading() {
     return copyWith(status: GithubStatus.loading);
   }
 
-  GithubRepoState toStateError({String message = ''})  {
+  GithubRepoState toStateError({String message = ''}) {
     return copyWith(status: GithubStatus.error, message: message);
   }
-
-  @override
-  List<Object?> get props =>
-      [status, repositoryData, message, userData];
 }

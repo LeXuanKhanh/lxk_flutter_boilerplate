@@ -3,10 +3,10 @@ import 'package:lxk_flutter_boilerplate/shared/modules/authentication/models/cur
 import 'package:lxk_flutter_boilerplate/shared/modules/github_repo/models/repo.dart';
 
 class GithubRepoResources {
-  static Future<List<Repo>> getData() async {
-    final response = await ApiSdk().fetchGithubRepoGraphQl(10);
+  static Future<List<Repo>> getData({int limit = 10, String? cursor}) async {
+    final response = await ApiSdk().fetchGithubRepoGraphQl(limit, cursor);
     final List<dynamic> repos =
-        response.data['viewer']['repositories']['nodes'] as List<dynamic>;
+        response.data['viewer']['repositories']['edges'] as List<dynamic>;
     final List<Repo> listOfRepos = repoFromJsonArr(repos);
     return listOfRepos;
   }
