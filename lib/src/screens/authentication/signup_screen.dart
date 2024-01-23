@@ -63,7 +63,7 @@ class _SignUpFormState extends State<SignUpForm> {
           ElevatedButton(child:
               BlocBuilder<AuthenticationBloc, AuthenticationState>(
                   builder: (BuildContext context, AuthenticationState state) {
-                    return state is AuthenticationLoading ?
+                    return state.status == AuthenticationStatus.loading ?
                     CircularProgressIndicator(
                         backgroundColor: Theme.of(context).textTheme.bodyLarge?.color
                     ) :

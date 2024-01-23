@@ -72,7 +72,7 @@ class _LoginFormState extends State<LoginForm> {
       ElevatedButton(child:
           BlocBuilder<AuthenticationBloc, AuthenticationState>(
               builder: (BuildContext context, AuthenticationState state) {
-        return state is AuthenticationLoading
+        return state.status == AuthenticationStatus.loading
             ? CircularProgressIndicator(
                 backgroundColor: ColorConstants.onColorSurfaceColor)
             : Text('Login', style: Theme.of(context).textTheme.bodyLarge).onColorSurface;

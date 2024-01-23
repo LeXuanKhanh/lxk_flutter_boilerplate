@@ -23,14 +23,14 @@ class _SplashScreenState extends State<SplashScreen> {
         backgroundColor: ColorConstants.secondaryAppColor,
         body: BlocListener<AuthenticationBloc, AuthenticationState>(
           listener: (BuildContext context, AuthenticationState state) {
-            if (state is AppAutheticated) {
+            if (state.status == AuthenticationStatus.authenticated) {
               // ApiSdk.simulateTokenExpired();
               Navigator.pushNamed(context, RouteName.home.path);
             }
-            if (state is AuthenticationStart) {
+            if (state.status == AuthenticationStatus.notLogin) {
               Navigator.pushNamed(context, RouteName.auth.path);
             }
-            if (state is UserLogoutState) {
+            if (state.status == AuthenticationStatus.logout) {
               if (NavObserver().routePath.contains(RouteName.home.path)) {
                 Navigator.pushNamedAndRemoveUntil(context, RouteName.auth.path,
                     RouteName.splashScreen.modalRoute);
@@ -38,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 Navigator.popUntil(context, RouteName.auth.modalRoute);
               }
             }
-            if (state is AuthenticationShowTokenExpiredDialog) {
+            if (state.status == AuthenticationStatus.tokenExpired) {
               _showSessionExpiredDialog();
             }
           },

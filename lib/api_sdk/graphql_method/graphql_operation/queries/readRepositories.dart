@@ -36,7 +36,7 @@ const String testSubscription = r'''
 ''';
 
 const String userInfo = r'''
-query {
+query getUserInfo {
   viewer {
     login
     avatarUrl

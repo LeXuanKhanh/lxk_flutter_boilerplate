@@ -43,7 +43,7 @@ abstract class BaseHttpHandler {
 
 class DioHttpHandler extends BaseHttpHandler {
   DioHttpHandler._() {
-    // _dio.interceptors.add(CurlLoggerInterceptor(logPrint: debugPrintLog));
+    _dio.interceptors.add(CurlLoggerInterceptor(logPrint: debugPrintLog));
     _dio.interceptors.add(RetryInterceptor(
       dio: _dio,
       logPrint: debugPrintLog,

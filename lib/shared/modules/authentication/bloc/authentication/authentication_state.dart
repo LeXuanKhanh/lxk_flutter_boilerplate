@@ -1,39 +1,35 @@
-import 'package:equatable/equatable.dart';
-import 'package:lxk_flutter_boilerplate/shared/modules/authentication/models/current_user_data.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/authentication/models/user_info.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 
-abstract class AuthenticationState extends Equatable {
-  const AuthenticationState();
+part 'authentication_state.freezed.dart';
 
-  @override
-  List<Object> get props => [];
+enum AuthenticationStatus {
+  initial,
+  loading,
+  notLogin,
+  authenticated,
+  tokenExpired,
+  logout,
+  newUserData,
+  error,
 }
 
-class AppAutheticated extends AuthenticationState {}
+@freezed
+class AuthenticationState with _$AuthenticationState {
+  const factory AuthenticationState({
+    @Default(AuthenticationStatus.initial) AuthenticationStatus status,
+    @Default('') String message,
+    UserInfo? userData,
+  }) = _AuthenticationState;
 
-class AuthenticationInitial extends AuthenticationState {}
+  const AuthenticationState._();
 
-class AuthenticationLoading extends AuthenticationState {}
+  AuthenticationState toStateLoading() {
+    return copyWith(status: AuthenticationStatus.loading);
+  }
 
-class AuthenticationStart extends AuthenticationState {}
-
-class AuthenticationShowTokenExpiredDialog extends AuthenticationState {}
-
-class UserLogoutState extends AuthenticationState {}
-
-class SetUserData extends AuthenticationState {
-  final CurrentUserData currentUserData;
-  const SetUserData({required this.currentUserData});
-  @override
-  List<Object> get props => [currentUserData];
-}
-
-class AuthenticationNotAuthenticated extends AuthenticationState {}
-
-class AuthenticationFailure extends AuthenticationState {
-  final String message;
-
-  const AuthenticationFailure({this.message = ''});
-
-  @override
-  List<Object> get props => [message];
+  AuthenticationState toStateError({String message = ''}) {
+    return copyWith(status: AuthenticationStatus.error, message: message);
+  }
 }

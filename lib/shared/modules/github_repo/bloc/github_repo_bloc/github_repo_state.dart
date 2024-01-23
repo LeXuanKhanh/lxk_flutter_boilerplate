@@ -1,6 +1,5 @@
-import 'package:equatable/equatable.dart';
 import 'package:lxk_flutter_boilerplate/api_sdk/api_sdk.dart';
-import 'package:lxk_flutter_boilerplate/shared/modules/authentication/models/current_user_data.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/github_repo/models/github_user.dart';
 import 'package:lxk_flutter_boilerplate/shared/modules/github_repo/models/repo.dart';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -22,7 +21,7 @@ class GithubRepoState with _$GithubRepoState {
   const factory GithubRepoState({
     @Default(GithubStatus.initial) GithubStatus status,
     @Default('') String message,
-    CurrentUserData? userData,
+    GithubUser? userData,
     @Default([]) List<Repo> repositoryData,
     @Default(1) int page,
     @Default(true) bool canLoadMore,

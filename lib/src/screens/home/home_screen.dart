@@ -98,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         shape: BoxShape.circle,
                       ),
                       child: CachedImage(
-                        imageUrl: state.userData!.data.avatar,
+                        imageUrl: state.userData!.avatarUrl,
                         fit: BoxFit.contain,
                         errorWidget: Image.network(
                           AllImages().kDefaultImage,
@@ -110,10 +110,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                        '${state.userData!.data.firstName} - ${state.userData!.data.lastName}',
+                        state.userData!.name,
                         style: Theme.of(context).textTheme.bodyMedium),
                     const SizedBox(height: 8),
-                    Text(state.userData!.data.email,
+                    Text(state.userData!.email,
                         style: Theme.of(context).textTheme.bodyMedium),
                   ]),
                 ),
@@ -136,7 +136,8 @@ class _HomeScreenState extends State<HomeScreen> {
         onWillPop: () async => false,
         child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
             builder: (BuildContext context, AuthenticationState state) {
-          if (state is SetUserData) {
+          if (state.status == AuthenticationStatus.newUserData) {
+            final userData = state.userData!;
             return Scaffold(
               appBar: AppBar(
                 centerTitle: true,
@@ -181,7 +182,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               shape: BoxShape.circle,
                             ),
                             child: CachedImage(
-                              imageUrl: state.currentUserData.data.avatar,
+                              imageUrl: userData.data.avatar,
                               fit: BoxFit.contain,
                               errorWidget: Image.network(
                                 AllImages().kDefaultImage,
@@ -193,13 +194,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                              '${state.currentUserData.data.firstName} ${state.currentUserData.data.lastName}',
+                              '${userData.data.firstName} ${userData.data.lastName}',
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium
                                   ?.copyWith(color: Colors.white)),
                           const SizedBox(height: 8),
-                          Text(state.currentUserData.data.email,
+                          Text(userData.data.email,
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium

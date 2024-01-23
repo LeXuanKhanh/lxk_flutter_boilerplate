@@ -37,7 +37,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
         child: BlocListener<AuthenticationBloc, AuthenticationState>(
         bloc: context.read<AuthenticationBloc>(),
         listener: (context, state) {
-          if (state is AuthenticationFailure) {
+          if (state.status == AuthenticationStatus.error) {
             _showError(state.message);
           }
         },

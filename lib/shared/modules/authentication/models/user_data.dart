@@ -1,18 +1,21 @@
-class UserData {
-  int id = -1;
-  String token = '';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 
-  UserData({required this.id, required this.token});
+part 'user_data.freezed.dart';
+part 'user_data.g.dart';
 
-  UserData.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    token = json['token'];
-  }
+// quick and small user data, only use in login api
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['token'] = token;
-    return data;
-  }
+@freezed
+class UserData with _$UserData {
+  @JsonSerializable(
+    fieldRename: FieldRename.snake
+  )
+  const factory UserData({
+    @Default(-1) int id,
+    @Default('') String token
+  }) = _UserData;
+
+  factory UserData.fromJson(Map<String, dynamic> json) =>
+      _$UserDataFromJson(json);
 }
