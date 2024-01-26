@@ -2,8 +2,9 @@
 //
 //     final userInfo = userInfoFromJson(jsonString);
 
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'dart:convert';
+
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user_info.freezed.dart';
 part 'user_info.g.dart';
@@ -19,7 +20,8 @@ class UserInfo with _$UserInfo {
     required Support support,
   }) = _UserInfo;
 
-  factory UserInfo.fromJson(Map<String, dynamic> json) => _$UserInfoFromJson(json);
+  factory UserInfo.fromJson(Map<String, dynamic> json) =>
+      _$UserInfoFromJson(json);
 }
 
 @freezed
@@ -42,5 +44,6 @@ class Support with _$Support {
     required String text,
   }) = _Support;
 
-  factory Support.fromJson(Map<String, dynamic> json) => _$SupportFromJson(json);
+  factory Support.fromJson(Map<String, dynamic> json) =>
+      _$SupportFromJson(json);
 }

@@ -1,29 +1,34 @@
 import 'package:lxk_flutter_boilerplate/api_sdk/api_sdk.dart';
 import 'package:lxk_flutter_boilerplate/api_sdk/rest/api_helpers/api_exception.dart';
-import 'package:lxk_flutter_boilerplate/shared/modules/authentication/models/user_info.dart';
 import 'package:lxk_flutter_boilerplate/shared/modules/authentication/models/user_data.dart';
+import 'package:lxk_flutter_boilerplate/shared/modules/authentication/models/user_info.dart';
 
 class AuthenticationRepository {
   Future<UserData> signUpWithEmailAndPassword(
       String email, String password) async {
-    await Future.delayed(const Duration(seconds: 1)); // simulate a network delay
+    await Future.delayed(
+        const Duration(seconds: 1)); // simulate a network delay
     final response = await ApiSdk.signUpWithEmailAndPassword(
         {'email': email, 'password': password});
     if (response["error"] != null) {
-      throw FetchDataException('There is an error in request: ${response["error"]}');
+      throw FetchDataException(
+          'There is an error in request: ${response["error"]}');
     } else {
       final currentUser = UserData.fromJson(response);
+      String a = '';
       return currentUser;
     }
   }
 
   Future<UserData> loginWithEmailAndPassword(
       String email, String password) async {
-    await Future.delayed(const Duration(seconds: 1)); // simulate a network delay
+    await Future.delayed(
+        const Duration(seconds: 1)); // simulate a network delay
     final response = await ApiSdk.loginWithEmailAndPassword(
         {'email': email, 'password': password});
     if (response["error"] != null) {
-      throw FetchDataException('There is an error in request: ${response["error"]}');
+      throw FetchDataException(
+          'There is an error in request: ${response["error"]}');
     } else {
       final currentUser = UserData.fromJson(response);
       return currentUser;
